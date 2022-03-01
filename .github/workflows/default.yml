@@ -16,7 +16,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Lint
         run: |
-          npm run eslint
+          npx eslint .
         env:
           CI: true
   prettier:
