@@ -37,8 +37,6 @@ describe("trip creation tests", () => {
     cy.findByRole("textbox", { name: /longitude:/i }).type(testTrip.long);
     cy.findByRole("button", { name: /save/i }).click();
 
-    cy.findByText(`${testTrip.destination}`);
-
     cy.findByRole("button", { name: /delete/i }).click();
     cy.findByText("No trips yet");
   });
