@@ -12,15 +12,41 @@ export default function Header() {
             where<span className="text-sky-200">.directory</span>
           </Link>
         </h1>
-        <nav className="ml-20">
+        <nav className="ml-20 flex flex-row">
           {user && (
-            <Link
-              to="/trips"
-              className="text-white-700 flex items-center justify-center px-4 py-2 text-base font-semibold hover:font-bold sm:px-8"
-            >
-              Dashboard
-            </Link>
+            <>
+              <Link
+                to="/trips"
+                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/profile"
+                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+              >
+                Profile
+              </Link>
+            </>
           )}
+          <Link
+            to="/changelog"
+            className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+          >
+            Changelog
+          </Link>
+          <Link
+            to="/privacy"
+            className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+          >
+            Privacy
+          </Link>
+          <a
+            href="https://github.com/MichaelKohler/where.directory/"
+            className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+          >
+            Open Source
+          </a>
         </nav>
       </section>
 
