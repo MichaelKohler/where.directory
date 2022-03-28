@@ -2,20 +2,20 @@ import { json, useLoaderData, Outlet, Link, NavLink } from "remix";
 import type { LoaderFunction } from "remix";
 
 import Header from "~/components/header";
-import { getNoteListItems } from "~/models/note.server";
+import { getTripListItems } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
 
 type LoaderData = {
-  noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
+  tripListItems: Awaited<ReturnType<typeof getTripListItems>>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({ userId });
-  return json<LoaderData>({ noteListItems });
+  const tripListItems = await getTripListItems({ userId });
+  return json<LoaderData>({ tripListItems });
 };
 
-export default function NotesPage() {
+export default function TripsPage() {
   const data = useLoaderData() as LoaderData;
 
   return (
@@ -25,24 +25,33 @@ export default function NotesPage() {
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
           <Link to="new" className="block p-4 text-xl text-blue-500">
-            + New Note
+            + New Trip
           </Link>
 
           <hr />
 
-          {data.noteListItems.length === 0 ? (
-            <p className="p-4">No notes yet</p>
+          {data.tripListItems.length === 0 ? (
+            <p className="p-4">No trips yet</p>
           ) : (
             <ol>
-              {data.noteListItems.map((note) => (
-                <li key={note.id}>
+              {data.tripListItems.map((trip) => (
+                <li key={trip.id}>
                   <NavLink
                     className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                      `align-items block flex w-full flex-row gap-1 border-b p-4 text-xl ${
+                        isActive ? "bg-white" : ""
+                      }`
                     }
-                    to={note.id}
+                    to={trip.id}
                   >
-                    📝 {note.title}
+                    <div>🌐</div>
+                    <div>
+                      {trip.destination}, {trip.country}
+                      <div className="text-sm">
+                        {new Date(trip.from).toLocaleDateString()} -{" "}
+                        {new Date(trip.to).toLocaleDateString()}
+                      </div>
+                    </div>
                   </NavLink>
                 </li>
               ))}

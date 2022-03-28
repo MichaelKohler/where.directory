@@ -15,7 +15,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   password Password?
-  notes    Note[]
+  trips    Trip[]
 }
 
 model Password {
@@ -25,10 +25,16 @@ model Password {
   userId String @unique
 }
 
-model Note {
-  id    String @id @default(cuid())
-  title String
-  body  String
+model Trip {
+  id          String @id @default(cuid())
+  destination String
+  country     String
+  description String
+  flights     Int
+  lat         Float
+  long        Float
+  from        DateTime
+  to          DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
