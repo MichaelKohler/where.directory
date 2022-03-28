@@ -24,18 +24,16 @@ async function seed() {
     },
   });
 
-  await prisma.note.create({
+  await prisma.trip.create({
     data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My second note",
-      body: "Hello, world!",
+      destination: "Berlin",
+      country: "DE",
+      description: "Fun!",
+      lat: 52.51,
+      long: 13.4,
+      flights: 0,
+      from: new Date("2022-01-01"),
+      to: new Date("2022-01-03"),
       userId: user.id,
     },
   });

@@ -15,7 +15,7 @@ export default function Header() {
         <nav className="ml-20">
           {user && (
             <Link
-              to="/notes"
+              to="/trips"
               className="text-white-700 flex items-center justify-center px-4 py-2 text-base font-semibold hover:font-bold sm:px-8"
             >
               Dashboard
