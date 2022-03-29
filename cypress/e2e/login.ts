@@ -9,6 +9,7 @@ describe("login tests", () => {
     const loginForm = {
       email: `${faker.internet.userName()}@example.com`,
       password: faker.internet.password(),
+      username: faker.hacker.noun(),
     };
     cy.then(() => ({ email: loginForm.email })).as("user");
 
@@ -17,6 +18,7 @@ describe("login tests", () => {
     cy.findByRole("link", { name: /sign up/i }).click();
     cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
     cy.findByLabelText(/password/i).type(loginForm.password);
+    cy.findByRole("textbox", { name: /username/i }).type(loginForm.username);
     cy.findByRole("button", { name: /create account/i }).click();
 
     cy.findByRole("link", { name: /dashboard/i }).click();
