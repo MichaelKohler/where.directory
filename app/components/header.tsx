@@ -22,10 +22,10 @@ export default function Header() {
                 Dashboard
               </Link>
               <Link
-                to="/profile"
+                to={`/u/${user.username}`}
                 className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
               >
-                Profile
+                Public Profile
               </Link>
             </>
           )}
