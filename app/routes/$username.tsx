@@ -1,7 +1,7 @@
 import { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
-import type { LoaderFunction } from "remix";
+import type { LoaderFunction, MetaFunction } from "remix";
 import { json, useLoaderData, useCatch } from "remix";
 import invariant from "tiny-invariant";
 import type { ExtendedTripInfo, Totals } from "~/models/trip.server";
@@ -36,6 +36,10 @@ function getNextTrip(
     return sortedTrips[firstPastTripIndex - 1];
   }
 }
+
+export const meta: MetaFunction = ({ params }) => ({
+  title: `where.directory - ${params.username}`,
+});
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.username, "username not found");

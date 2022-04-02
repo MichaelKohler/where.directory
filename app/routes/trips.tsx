@@ -1,5 +1,5 @@
 import { json, useLoaderData, Outlet, Link, NavLink } from "remix";
-import type { LoaderFunction } from "remix";
+import type { LoaderFunction, MetaFunction } from "remix";
 
 import { getTripListItems } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
@@ -7,6 +7,10 @@ import { requireUserId } from "~/session.server";
 type LoaderData = {
   tripListItems: Awaited<ReturnType<typeof getTripListItems>>;
 };
+
+export const meta: MetaFunction = () => ({
+  title: "where.directory - Dashboard",
+});
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
