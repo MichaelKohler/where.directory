@@ -1,4 +1,5 @@
 import { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
+import styles from "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
 import type { LoaderFunction, MetaFunction } from "remix";
@@ -7,8 +8,6 @@ import invariant from "tiny-invariant";
 import type { ExtendedTripInfo, Totals } from "~/models/trip.server";
 import { getTripListItems, getTotals } from "~/models/trip.server";
 import { getUserIdByUsername } from "~/models/user.server";
-
-import "mapbox-gl/dist/mapbox-gl.css";
 
 type LoaderData = {
   trips: ExtendedTripInfo[];
@@ -35,6 +34,10 @@ function getNextTrip(
   if (firstPastTripIndex > 0) {
     return sortedTrips[firstPastTripIndex - 1];
   }
+}
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
 }
 
 export const meta: MetaFunction = ({ params }) => ({
@@ -116,7 +119,7 @@ export default function UserDetailsPage() {
             latitude: 30,
             zoom: 1.8,
           }}
-          style={{ position: "revert", width: "100%", height: 800 }}
+          style={{ width: "100%", height: 800 }}
           mapStyle="mapbox://styles/mapbox/light-v10"
           mapboxAccessToken={data.mapboxToken}
         >
