@@ -21,6 +21,10 @@ export async function getUserIdByUsername(username: User["username"]) {
   return prisma.user.findUnique({ where: { username }, select: { id: true } });
 }
 
+export function countUsers() {
+  return prisma.user.count();
+}
+
 export async function changeUsername(
   username: User["username"],
   userId: User["id"]
