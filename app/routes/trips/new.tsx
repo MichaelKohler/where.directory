@@ -158,7 +158,7 @@ export default function NewTripPage() {
             aria-errormessage={
               actionData?.errors?.from ? "from-error" : undefined
             }
-            data-testId="new-trip-from-input"
+            data-testid="new-trip-from-input"
           />
         </label>
         {actionData?.errors?.from && (
@@ -178,7 +178,7 @@ export default function NewTripPage() {
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors?.to ? true : undefined}
             aria-errormessage={actionData?.errors?.to ? "to-error" : undefined}
-            data-testId="new-trip-to-input"
+            data-testid="new-trip-to-input"
           />
         </label>
         {actionData?.errors?.to && (
