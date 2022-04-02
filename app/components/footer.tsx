@@ -6,10 +6,10 @@ export default function Footer() {
     <footer className="flex items-center justify-center bg-slate-800 p-4 text-white">
       <nav className="ml-20 flex flex-row">
         <Link
-          to="/changelog"
+          to="/announcements"
           className="text-white-700 px-4 py-2 text-base font-semibold sm:px-8"
         >
-          Changelog
+          Announcements
         </Link>
         <Link
           to="/privacy"
