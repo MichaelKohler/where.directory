@@ -1,3 +1,6 @@
+import { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
+import Map, { Source, Layer } from "react-map-gl";
+import type { CircleLayer } from "react-map-gl";
 import type { LoaderFunction } from "remix";
 import { json, useLoaderData, useCatch } from "remix";
 import invariant from "tiny-invariant";
@@ -5,10 +8,22 @@ import type { ExtendedTripInfo, Totals } from "~/models/trip.server";
 import { getTripListItems, getTotals } from "~/models/trip.server";
 import { getUserIdByUsername } from "~/models/user.server";
 
+import "mapbox-gl/dist/mapbox-gl.css";
+
 type LoaderData = {
   trips: ExtendedTripInfo[];
   nextTrip?: ExtendedTripInfo;
   totals: Totals;
+  mapboxToken: string;
+};
+
+const layerStyle: CircleLayer = {
+  id: "point",
+  type: "circle",
+  paint: {
+    "circle-radius": 4,
+    "circle-color": "#1f3352",
+  },
 };
 
 function getNextTrip(
@@ -34,11 +49,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const nextTrip = getNextTrip(trips);
   const totals = getTotals(trips);
 
-  return json<LoaderData>({ trips, nextTrip, totals });
+  const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
+
+  return json<LoaderData>({ trips, nextTrip, totals, mapboxToken });
 };
 
 export default function UserDetailsPage() {
   const data = useLoaderData() as LoaderData;
+
+  const geojson: FeatureCollection<Geometry, GeoJsonProperties> = {
+    type: "FeatureCollection",
+    features: data.trips.map((trip) => ({
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [trip.long, trip.lat] },
+      properties: {},
+    })),
+  };
 
   return (
     <main className="my-12 mx-auto flex min-h-full w-11/12 flex-col bg-white px-8">
@@ -77,6 +103,23 @@ export default function UserDetailsPage() {
             <p className="mt-2">unique countries</p>
           </div>
         </div>
+      </section>
+
+      <section className="mt-2">
+        <Map
+          initialViewState={{
+            longitude: 0,
+            latitude: 30,
+            zoom: 1.8,
+          }}
+          style={{ position: "revert", width: "100%", height: 800 }}
+          mapStyle="mapbox://styles/mapbox/light-v10"
+          mapboxAccessToken={data.mapboxToken}
+        >
+          <Source id="data-source" type="geojson" data={geojson}>
+            <Layer {...layerStyle} />
+          </Source>
+        </Map>
       </section>
 
       <table className="mt-7 text-left leading-8">
