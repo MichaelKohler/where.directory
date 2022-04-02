@@ -4,6 +4,16 @@ import { prisma } from "~/db.server";
 
 export type { Trip } from "@prisma/client";
 
+export type ExtendedTripInfo = Trip & {
+  isFuture: boolean;
+};
+
+export type Totals = {
+  trips: number;
+  destinations: number;
+  countries: number;
+};
+
 export function getTrip({
   id,
   userId,
@@ -15,11 +25,35 @@ export function getTrip({
   });
 }
 
-export function getTripListItems({ userId }: { userId: User["id"] }) {
-  return prisma.trip.findMany({
+export async function getTripListItems({ userId }: { userId: User["id"] }) {
+  const storedTrips = await prisma.trip.findMany({
     where: { userId },
     orderBy: { from: "desc" },
   });
+
+  const trips = storedTrips.map((trip) => ({
+    ...trip,
+    isFuture: trip.from > new Date(),
+  }));
+
+  return trips;
+}
+
+export function getTotals(trips: ExtendedTripInfo[]): Totals {
+  // Prisma so far does not support counting on distinct values, so we pass the full list
+  // and calculate this ourselves.
+
+  const pastTrips = trips.filter((trip) => trip.from < new Date());
+  const totalTrips = pastTrips.length;
+  const destinations = [...new Set(pastTrips.map((trip) => trip.destination))]
+    .length;
+  const countries = [...new Set(pastTrips.map((trip) => trip.country))].length;
+
+  return {
+    trips: totalTrips,
+    destinations,
+    countries,
+  };
 }
 
 export function createTrip({
