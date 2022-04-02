@@ -56,6 +56,35 @@ export function getTotals(trips: ExtendedTripInfo[]): Totals {
   };
 }
 
+export function createTrips(trips: Trip[], userId: string) {
+  try {
+    return prisma.$transaction(
+      trips.map((trip) => {
+        return prisma.trip.create({
+          data: {
+            destination: trip.destination,
+            country: trip.country,
+            description: trip.description,
+            flights: trip.flights,
+            lat: trip.lat,
+            long: trip.long,
+            from: new Date(trip.from),
+            to: new Date(trip.to),
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+          },
+        });
+      })
+    );
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export function createTrip({
   destination,
   country,
