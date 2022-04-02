@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Form, json, redirect, useActionData } from "remix";
+import { Form, json, redirect, useActionData, useTransition } from "remix";
 import type { ActionFunction } from "remix";
 import Alert from "@reach/alert";
 
@@ -105,6 +105,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function NewTripPage() {
   const actionData = useActionData() as ActionData;
+  const transition = useTransition();
+
   const fromRef = React.useRef<HTMLInputElement>(null);
   const toRef = React.useRef<HTMLInputElement>(null);
   const destinationRef = React.useRef<HTMLInputElement>(null);
@@ -311,9 +313,17 @@ export default function NewTripPage() {
 
       <button
         type="submit"
-        className="rounded bg-slate-600 py-2 px-4 text-blue-100 hover:bg-slate-500 active:bg-slate-500"
+        className="rounded bg-slate-600 py-2 px-4 text-white hover:bg-slate-500 active:bg-slate-500"
+        disabled={!!transition.submission}
       >
-        Save
+        {transition.submission ? (
+          <div
+            className="spinner-border inline-block h-4 w-4 animate-spin rounded-full border-2"
+            role="status"
+          ></div>
+        ) : (
+          "Save"
+        )}
       </button>
     </Form>
   );

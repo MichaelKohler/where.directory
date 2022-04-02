@@ -43,10 +43,13 @@ export default function TripDetailsPage() {
         {new Date(data.trip.from).toLocaleDateString()} -{" "}
         {new Date(data.trip.to).toLocaleDateString()}
       </p>
-      {data.trip.destination && <p className="py-6">{data.trip.description}</p>}
+      {data.trip.description && <p className="py-6">{data.trip.description}</p>}
       <p className="py-6">Flights: {data.trip.flights}</p>
       <hr className="my-4" />
-      <Form method="post">
+      <small className="text-xs">
+        Pressing the "Delete" button will instantly delete this trip.
+      </small>
+      <Form method="post" className="mt-4">
         <button
           type="submit"
           className="rounded bg-red-700 py-2 px-4 text-white hover:bg-red-500 active:bg-slate-500"
