@@ -26,13 +26,15 @@ export default function UserDetailsPage() {
   const data = useLoaderData() as LoaderData;
 
   return (
-    <ul>
-      {data.trips.map((trip) => (
-        <li key={trip.id}>
-          {trip.destination}, {trip.country}
-        </li>
-      ))}
-    </ul>
+    <main className="flex h-full min-h-screen bg-white">
+      <ul>
+        {data.trips.map((trip) => (
+          <li key={trip.id}>
+            {trip.destination}, {trip.country}
+          </li>
+        ))}
+      </ul>
+    </main>
   );
 }
 
