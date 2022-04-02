@@ -21,6 +21,25 @@ export async function getUserIdByUsername(username: User["username"]) {
   return prisma.user.findUnique({ where: { username }, select: { id: true } });
 }
 
+export async function changeUsername(
+  username: User["username"],
+  userId: User["id"]
+) {
+  const existingUsername = await getUserIdByUsername(username);
+  if (existingUsername) {
+    throw new Error("USERNAME_ALREADY_EXISTS");
+  }
+
+  return prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      username,
+    },
+  });
+}
+
 export async function createUser(
   email: User["email"],
   password: string,
@@ -43,6 +62,10 @@ export async function createUser(
 
 export async function deleteUserByEmail(email: User["email"]) {
   return prisma.user.delete({ where: { email } });
+}
+
+export async function deleteUserByUserId(id: User["id"]) {
+  return prisma.user.delete({ where: { id } });
 }
 
 export async function verifyLogin(
