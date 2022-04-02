@@ -29,24 +29,6 @@ export default function Header() {
               </Link>
             </>
           )}
-          <Link
-            to="/changelog"
-            className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
-          >
-            Changelog
-          </Link>
-          <Link
-            to="/privacy"
-            className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
-          >
-            Privacy
-          </Link>
-          <a
-            href="https://github.com/MichaelKohler/where.directory/"
-            className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
-          >
-            Open Source
-          </a>
         </nav>
       </section>
 
