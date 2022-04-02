@@ -56,6 +56,10 @@ export function getTotals(trips: ExtendedTripInfo[]): Totals {
   };
 }
 
+export function countTrips() {
+  return prisma.trip.count();
+}
+
 export function createTrips(trips: Trip[], userId: User["id"]) {
   try {
     return prisma.$transaction(
