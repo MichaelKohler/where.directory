@@ -36,7 +36,7 @@ export default function TripDetailsPage() {
 
   return (
     <div>
-      <h3 className="text-2xl font-bold">
+      <h3 className="font-title text-2xl">
         {data.trip.destination}, {data.trip.country}
       </h3>
       <p className="py-6">
