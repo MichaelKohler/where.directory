@@ -1,3 +1,7 @@
+import { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
+import styles from "mapbox-gl/dist/mapbox-gl.css";
+import Map, { Source, Layer } from "react-map-gl";
+import type { CircleLayer } from "react-map-gl";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { redirect } from "remix";
 import { json, useLoaderData, useCatch, Form } from "remix";
@@ -9,7 +13,21 @@ import { requireUserId } from "~/session.server";
 
 type LoaderData = {
   trip: Trip;
+  mapboxToken: string;
 };
+
+const layerStyle: CircleLayer = {
+  id: "point",
+  type: "circle",
+  paint: {
+    "circle-radius": 4,
+    "circle-color": "#1f3352",
+  },
+};
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
@@ -19,7 +37,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!trip) {
     throw new Response("Not Found", { status: 404 });
   }
-  return json<LoaderData>({ trip });
+
+  const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
+
+  return json<LoaderData>({ trip, mapboxToken });
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -34,6 +55,20 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function TripDetailsPage() {
   const data = useLoaderData() as LoaderData;
 
+  const geojson: FeatureCollection<Geometry, GeoJsonProperties> = {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [data.trip.long, data.trip.lat],
+        },
+        properties: {},
+      },
+    ],
+  };
+
   return (
     <div>
       <h3 className="font-title text-2xl">
@@ -45,6 +80,20 @@ export default function TripDetailsPage() {
       </p>
       {data.trip.description && <p className="py-6">{data.trip.description}</p>}
       <p className="py-6">Flights: {data.trip.flights}</p>
+      <section className="mt-2">
+        <Map
+          longitude={data.trip.long}
+          latitude={data.trip.lat}
+          zoom={10}
+          style={{ width: "100%", height: 400 }}
+          mapStyle="mapbox://styles/mapbox/light-v10"
+          mapboxAccessToken={data.mapboxToken}
+        >
+          <Source id="data-source" type="geojson" data={geojson}>
+            <Layer {...layerStyle} />
+          </Source>
+        </Map>
+      </section>
       <hr className="my-4" />
       <small className="text-xs">
         Pressing the "Delete" button will instantly delete this trip.
