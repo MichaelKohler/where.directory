@@ -23,7 +23,7 @@ export default function TripsPage() {
 
   return (
     <main className="flex min-h-screen bg-white">
-      <div className="h-full w-80 border-r bg-gray-50">
+      <div className="h-full w-40 border-r bg-gray-50 md:w-80">
         <Link to="new" className="block p-4 text-xl text-blue-500">
           + New Trip
         </Link>
@@ -38,7 +38,7 @@ export default function TripsPage() {
               <li key={trip.id}>
                 <NavLink
                   className={({ isActive }) =>
-                    `align-items block flex w-full flex-row gap-1 border-b p-4 text-xl ${
+                    `align-items text-l block flex w-full flex-row gap-1 border-b p-4 ${
                       isActive ? "bg-white" : ""
                     }`
                   }
@@ -46,7 +46,9 @@ export default function TripsPage() {
                 >
                   <div>🌐</div>
                   <div>
-                    {trip.destination}, {trip.country}
+                    <p>
+                      {trip.destination}, {trip.country}
+                    </p>
                     <div className="text-sm">
                       {new Date(trip.from).toLocaleDateString()} -{" "}
                       {new Date(trip.to).toLocaleDateString()}

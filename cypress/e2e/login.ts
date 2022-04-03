@@ -21,7 +21,7 @@ describe("login tests", () => {
     cy.findByRole("textbox", { name: /username/i }).type(loginForm.username);
     cy.findByRole("button", { name: /create account/i }).click();
 
-    cy.findByRole("link", { name: /dashboard/i }).click();
+    cy.findByRole("link", { name: /trips/i }).click();
     cy.findByText(/no trip selected/i);
 
     cy.findByRole("button", { name: /logout/i }).click();
