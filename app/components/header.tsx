@@ -43,7 +43,7 @@ export default function Header() {
           <Form action="/logout" method="post">
             <button
               type="submit"
-              className="rounded bg-slate-600 py-2 px-4 text-blue-100 hover:bg-slate-500 active:bg-slate-500"
+              className="text-white-100 rounded bg-slate-600 py-2 px-4 hover:bg-slate-500 active:bg-slate-500"
             >
               Logout
             </button>
@@ -52,13 +52,13 @@ export default function Header() {
           <div className="flex flex-row space-x-4">
             <Link
               to="/join"
-              className="flex items-center justify-center rounded bg-slate-600 py-2 px-4 font-medium text-blue-100 hover:bg-slate-500 active:bg-slate-500"
+              className="text-white-100 flex items-center justify-center rounded bg-yellow-600 py-2 px-4 font-medium hover:bg-yellow-500 active:bg-yellow-500"
             >
               Sign up
             </Link>
             <Link
               to="/login"
-              className="flex items-center justify-center rounded bg-yellow-500 px-4 py-2 font-medium text-white hover:bg-yellow-600"
+              className="flex items-center justify-center rounded bg-slate-600 px-4 py-2 font-medium text-white hover:bg-slate-500 active:bg-slate-500"
             >
               Log In
             </Link>
