@@ -74,7 +74,7 @@ export default function UserDetailsPage() {
   };
 
   return (
-    <main className="my-12 mx-auto flex min-h-full w-11/12 flex-col bg-white px-8">
+    <main className="w-12/12 my-12 mx-auto flex min-h-full flex-col bg-white px-8 md:w-11/12">
       <section className="bg-slate-800 px-7 text-white">
         {data.nextTrip && (
           <div className="mt-10">
@@ -88,25 +88,19 @@ export default function UserDetailsPage() {
           </div>
         )}
 
-        <div className="mt-10 mb-10 flex flex-row justify-between">
+        <div className="mt-10 mb-10 flex flex-row justify-between text-center">
           <div>
-            <h2 className="text-center font-title text-3xl">
-              {data.totals.trips}
-            </h2>
+            <h2 className="font-title text-3xl">{data.totals.trips}</h2>
             <p className="mt-2">total trips</p>
           </div>
 
           <div>
-            <h2 className="text-center font-title text-3xl">
-              {data.totals.destinations}
-            </h2>
+            <h2 className="font-title text-3xl">{data.totals.destinations}</h2>
             <p className="mt-2">unique destinations</p>
           </div>
 
           <div>
-            <h2 className="text-center font-title text-3xl">
-              {data.totals.countries}
-            </h2>
+            <h2 className="font-title text-3xl">{data.totals.countries}</h2>
             <p className="mt-2">unique countries</p>
           </div>
         </div>

@@ -18,8 +18,8 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="align-items flex w-full flex-row justify-around px-9 py-11">
-        <div className="w-6/12">
+      <div className="align-items flex w-full flex-col justify-around px-9 py-11 md:flex-row">
+        <div className="md:w-6/12 md:pr-5">
           <h2 className="font-title text-4xl">Add your vacations</h2>
           <p className="mt-9 text-xl">
             Add your vacations and see them on Map. Forgot when you were at a
@@ -27,13 +27,13 @@ export default function Index() {
             remember again.
           </p>
         </div>
-        <div className="w-6/12 max-w-md">
+        <div className="mt-5 max-w-md md:mt-0 md:w-6/12">
           <img src="/add.png" alt="Screenshot of how it looks to add a trip" />
         </div>
       </div>
 
-      <div className="align-items flex w-full flex-row-reverse justify-around px-9 py-11">
-        <div className="w-6/12">
+      <div className="align-items flex w-full flex-col justify-around px-9 py-11 md:flex-row-reverse">
+        <div className="md:w-6/12 md:pl-5">
           <h2 className="font-title text-4xl">Share it with the world</h2>
           <p className="mt-9 text-xl">
             The public profile with the map is easy to share with friends and
@@ -43,7 +43,7 @@ export default function Index() {
             where you are planning to go, all up to you!
           </p>
         </div>
-        <div className="w-6/12 max-w-md">
+        <div className="mt-5 max-w-md md:mt-0 md:w-6/12">
           <img
             src="/map.png"
             alt="Screenshot of how the public profile with total trips and map"
@@ -51,8 +51,8 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="align-items flex w-full flex-row justify-around px-9 py-11">
-        <div className="w-6/12">
+      <div className="align-items flex w-full flex-col justify-around px-9 py-11 md:flex-row">
+        <div className="md:w-6/12 md:pr-5">
           <h2 className="font-title text-4xl">
             Open Source and privacy-oriented
           </h2>
@@ -64,7 +64,7 @@ export default function Index() {
             import and export data if needed.
           </p>
         </div>
-        <div className="w-6/12 max-w-md">
+        <div className="mt-5 max-w-md md:mt-0 md:w-6/12">
           <img src="/os.png" alt="Screenshot of open issues on GitHub" />
         </div>
       </div>

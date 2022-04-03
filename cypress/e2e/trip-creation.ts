@@ -20,7 +20,7 @@ describe("trip creation tests", () => {
     cy.login();
     cy.visit("/");
 
-    cy.findByRole("link", { name: /dashboard/i }).click();
+    cy.findByRole("link", { name: /trips/i }).click();
     cy.findByRole("link", { name: /\+ new trip/i }).click();
 
     cy.get('[data-testid="new-trip-from-input"]').type(testTrip.from);

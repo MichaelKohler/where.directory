@@ -6,30 +6,30 @@ export default function Header() {
   const user = useOptionalUser();
   return (
     <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
-      <section className="flex flex-row">
+      <section className="flex flex-col md:flex-row">
         <h1 className="text-3xl font-bold">
           <Link to="/">
             where<span className="text-sky-200">.directory</span>
           </Link>
         </h1>
-        <nav className="ml-20 flex flex-row">
+        <nav className="mt-3 flex flex-row md:mt-0 md:ml-20">
           {user && (
             <>
               <Link
                 to="/trips"
-                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 py-2 pl-0 pr-8 text-base font-semibold hover:border-white md:pl-8 md:pr-8"
               >
-                Dashboard
+                Trips
               </Link>
               <Link
                 to={`/${user.username}`}
-                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 py-2 pr-8 text-base font-semibold hover:border-white md:pl-8 md:pr-8"
               >
                 Profile
               </Link>
               <Link
                 to="/account"
-                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 px-4 py-2 text-base font-semibold hover:border-white sm:px-8"
+                className="text-white-700 flex items-center justify-center border-b-2 border-slate-800 py-2 pr-8 text-base font-semibold hover:border-white md:pl-8 md:pr-8"
               >
                 Account
               </Link>
