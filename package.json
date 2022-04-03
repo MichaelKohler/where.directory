@@ -80,5 +80,5 @@
   "prisma": {
     "seed": "node --require esbuild-register prisma/seed.ts"
   },
-  "version": "0.0.2"
+  "version": "0.1.0"
 }
