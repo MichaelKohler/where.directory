@@ -1,6 +1,6 @@
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import * as React from "react";
-import Map, { Marker, MarkerDragEvent } from "react-map-gl";
+import Map, { Marker, MapLayerMouseEvent, MarkerDragEvent } from "react-map-gl";
 import {
   Form,
   json,
