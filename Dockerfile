@@ -3,9 +3,12 @@ FROM node:16-bullseye-slim as base
 
 # set for base and all layer that inherit from it
 ENV NODE_ENV production
+ENV DATABASE_URL=file:/data/sqlite.db
 
-# Install openssl for Prisma
-RUN apt-get update && apt-get install -y openssl
+# Install openssl for Prisma and SQLite for DB access
+RUN apt-get update && apt-get install -y openssl sqlite3
+
+RUN echo "#!/bin/sh\nset -x\nsqlite3 \$DATABASE_URL" > /usr/local/bin/database-cli && chmod +x /usr/local/bin/database-cli
 
 # Install all node_modules, including dev dependencies
 FROM base as deps
