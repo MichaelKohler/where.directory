@@ -276,6 +276,7 @@ export default function NewTripPage() {
             ref={latRef}
             type="float"
             name="lat"
+            placeholder="8.23"
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors?.lat ? true : undefined}
             aria-errormessage={
@@ -297,6 +298,7 @@ export default function NewTripPage() {
             ref={longRef}
             type="float"
             name="long"
+            placeholder="22.57"
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors?.long ? true : undefined}
             aria-errormessage={
