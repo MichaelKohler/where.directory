@@ -1,10 +1,23 @@
+import styles from "mapbox-gl/dist/mapbox-gl.css";
 import * as React from "react";
-import { Form, json, redirect, useActionData, useTransition } from "remix";
-import type { ActionFunction } from "remix";
+import Map, { Marker, MapLayerMouseEvent, MarkerDragEvent } from "react-map-gl";
+import {
+  Form,
+  json,
+  redirect,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "remix";
+import type { ActionFunction, LoaderFunction } from "remix";
 import Alert from "@reach/alert";
 
 import { createTrip } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
+
+type LoaderData = {
+  mapboxToken: string;
+};
 
 type ActionData = {
   errors?: {
@@ -17,6 +30,16 @@ type ActionData = {
     from?: string;
     to?: string;
   };
+};
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
+
+export const loader: LoaderFunction = async () => {
+  const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
+
+  return json<LoaderData>({ mapboxToken });
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -105,7 +128,10 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function NewTripPage() {
   const actionData = useActionData() as ActionData;
+  const data = useLoaderData() as LoaderData;
   const transition = useTransition();
+  const [lat, setLatitude] = React.useState<number>(0);
+  const [long, setLongitude] = React.useState<number>(0);
 
   const fromRef = React.useRef<HTMLInputElement>(null);
   const toRef = React.useRef<HTMLInputElement>(null);
@@ -113,8 +139,11 @@ export default function NewTripPage() {
   const countryRef = React.useRef<HTMLInputElement>(null);
   const descriptionRef = React.useRef<HTMLTextAreaElement>(null);
   const flightsRef = React.useRef<HTMLInputElement>(null);
-  const latRef = React.useRef<HTMLInputElement>(null);
-  const longRef = React.useRef<HTMLInputElement>(null);
+
+  const setLocation = (event: MarkerDragEvent | MapLayerMouseEvent) => {
+    setLatitude(event.lngLat.lat);
+    setLongitude(event.lngLat.lng);
+  };
 
   React.useEffect(() => {
     if (actionData?.errors?.to) {
@@ -129,10 +158,6 @@ export default function NewTripPage() {
       descriptionRef.current?.focus();
     } else if (actionData?.errors?.flights) {
       flightsRef.current?.focus();
-    } else if (actionData?.errors?.lat) {
-      latRef.current?.focus();
-    } else if (actionData?.errors?.long) {
-      longRef.current?.focus();
     }
   }, [actionData]);
 
@@ -228,6 +253,39 @@ export default function NewTripPage() {
         )}
       </div>
 
+      <div className="mt-2">
+        <Map
+          initialViewState={{
+            longitude: 0,
+            latitude: 0,
+            zoom: 1,
+          }}
+          style={{ width: "100%", height: 400 }}
+          mapStyle="mapbox://styles/mapbox/light-v10"
+          mapboxAccessToken={data.mapboxToken}
+          renderWorldCopies={false}
+          onClick={setLocation}
+        >
+          <Marker
+            longitude={long}
+            latitude={lat}
+            anchor="bottom"
+            draggable={true}
+            onDragEnd={setLocation}
+          ></Marker>
+        </Map>
+        {actionData?.errors?.lat && (
+          <Alert className="pt-1 text-red-700" id="lat=error">
+            {actionData.errors.lat}
+          </Alert>
+        )}
+        {actionData?.errors?.long && (
+          <Alert className="pt-1 text-red-700" id="long=error">
+            {actionData.errors.long}
+          </Alert>
+        )}
+      </div>
+
       <div>
         <label className="flex w-full flex-col gap-1">
           <span>Description: </span>
@@ -269,47 +327,8 @@ export default function NewTripPage() {
         )}
       </div>
 
-      <div>
-        <label className="flex w-full flex-col gap-1">
-          <span>Latitude: </span>
-          <input
-            ref={latRef}
-            type="float"
-            name="lat"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
-            aria-invalid={actionData?.errors?.lat ? true : undefined}
-            aria-errormessage={
-              actionData?.errors?.lat ? "lat-error" : undefined
-            }
-          />
-        </label>
-        {actionData?.errors?.lat && (
-          <Alert className="pt-1 text-red-700" id="lat=error">
-            {actionData.errors.lat}
-          </Alert>
-        )}
-      </div>
-
-      <div>
-        <label className="flex w-full flex-col gap-1">
-          <span>Longitude: </span>
-          <input
-            ref={longRef}
-            type="float"
-            name="long"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
-            aria-invalid={actionData?.errors?.long ? true : undefined}
-            aria-errormessage={
-              actionData?.errors?.long ? "long-error" : undefined
-            }
-          />
-        </label>
-        {actionData?.errors?.long && (
-          <Alert className="pt-1 text-red-700" id="long=error">
-            {actionData.errors.long}
-          </Alert>
-        )}
-      </div>
+      <input type="hidden" name="lat" value={lat} />
+      <input type="hidden" name="long" value={long} />
 
       <button
         type="submit"

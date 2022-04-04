@@ -33,8 +33,6 @@ describe("trip creation tests", () => {
       testTrip.description
     );
     cy.findByRole("spinbutton", { name: /flights:/i }).type(testTrip.flights);
-    cy.findByRole("textbox", { name: /latitude:/i }).type(testTrip.lat);
-    cy.findByRole("textbox", { name: /longitude:/i }).type(testTrip.long);
     cy.findByRole("button", { name: /save/i }).click();
 
     cy.findByRole("button", { name: /delete/i }).click();

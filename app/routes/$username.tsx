@@ -116,6 +116,7 @@ export default function UserDetailsPage() {
           style={{ width: "100%", height: 800 }}
           mapStyle="mapbox://styles/mapbox/light-v10"
           mapboxAccessToken={data.mapboxToken}
+          renderWorldCopies={false}
         >
           <Source id="data-source" type="geojson" data={geojson}>
             <Layer {...layerStyle} />

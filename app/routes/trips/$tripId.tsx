@@ -84,10 +84,13 @@ export default function TripDetailsPage() {
         <Map
           longitude={data.trip.long}
           latitude={data.trip.lat}
-          zoom={10}
+          initialViewState={{
+            zoom: 10,
+          }}
           style={{ width: "100%", height: 400 }}
           mapStyle="mapbox://styles/mapbox/light-v10"
           mapboxAccessToken={data.mapboxToken}
+          renderWorldCopies={false}
         >
           <Source id="data-source" type="geojson" data={geojson}>
             <Layer {...layerStyle} />
