@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "remix";
-import { json } from "remix";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { countTrips } from "~/models/trip.server";
 import { countUsers } from "~/models/user.server";
 import { requireUserId } from "~/session.server";

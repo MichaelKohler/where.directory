@@ -1,5 +1,6 @@
-import { json, useLoaderData, Outlet, Link, NavLink } from "remix";
-import type { LoaderFunction, MetaFunction } from "remix";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
 import { getTripListItems } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
