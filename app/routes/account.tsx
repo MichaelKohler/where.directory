@@ -1,13 +1,7 @@
 import * as React from "react";
-import {
-  Form,
-  Link,
-  json,
-  redirect,
-  useActionData,
-  useTransition,
-} from "remix";
-import type { ActionFunction } from "remix";
+import type { ActionFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 import Alert from "@reach/alert";
 
 import { changeUsername } from "~/models/user.server";

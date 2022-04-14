@@ -13,7 +13,6 @@
     "dev:remix": "node --require ./mocks ./node_modules/.bin/remix dev",
     "format": "prettier --write .",
     "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
-    "postinstall": "remix setup node",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "setup": "prisma migrate dev",
     "start": "remix-serve build",
@@ -35,13 +34,13 @@
     "@node-rs/bcrypt": "^1.6.0",
     "@prisma/client": "^3.12.0",
     "@reach/alert": "^0.16.0",
+    "@remix-run/node": "^1.4.0",
     "@remix-run/react": "^1.4.0",
     "@remix-run/serve": "^1.4.0",
     "mapbox-gl": "^2.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-map-gl": "^7.0.10",
-    "remix": "^1.4.0",
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {

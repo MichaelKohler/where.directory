@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "remix";
-import { json } from "remix";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import type { ExtendedTripInfo } from "~/models/trip.server";
 import { getTripListItems } from "~/models/trip.server";
 import { getUserById } from "~/models/user.server";
