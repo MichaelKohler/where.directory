@@ -1,11 +1,16 @@
 import * as React from "react";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData, useTransition } from "@remix-run/react";
 import Alert from "@reach/alert";
 
 import { deleteUserByUserId } from "~/models/user.server";
 import { requireUserId, logout } from "~/session.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  await requireUserId(request);
+  return null;
+};
 
 type ActionData = {
   errors?: {
@@ -28,7 +33,7 @@ export const action: ActionFunction = async ({ request }) => {
   return logout(request);
 };
 
-export default function ImportTripPage() {
+export default function DeletionPage() {
   const actionData = useActionData() as ActionData;
   const transition = useTransition();
 

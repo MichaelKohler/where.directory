@@ -3,7 +3,12 @@ import * as React from "react";
 import Map, { Marker, MapLayerMouseEvent, MarkerDragEvent } from "react-map-gl";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "@remix-run/react";
 import Alert from "@reach/alert";
 
 import { createTrip } from "~/models/trip.server";

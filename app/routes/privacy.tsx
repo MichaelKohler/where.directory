@@ -1,4 +1,4 @@
-export default function AnnouncementPage() {
+export default function PrivacyPage() {
   return (
     <main className="my-12 mx-auto flex min-h-full w-11/12 flex-col bg-white px-8">
       <h1 className="text-title text-4xl">Privacy Policy</h1>
