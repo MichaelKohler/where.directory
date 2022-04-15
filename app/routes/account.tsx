@@ -101,6 +101,15 @@ export default function ImportTripPage() {
         <hr className="my-8" />
 
         <Link
+          to="/password/change"
+          className="rounded bg-slate-600 py-2 px-4 text-center text-white hover:bg-slate-500 active:bg-slate-500"
+        >
+          Go to change password form
+        </Link>
+
+        <hr className="my-8" />
+
+        <Link
           to="/deletion"
           className="rounded bg-red-700 py-2 px-4 text-center text-white hover:bg-red-500 active:bg-red-500"
         >

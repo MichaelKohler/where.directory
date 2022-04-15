@@ -64,6 +64,24 @@ export async function createUser(
   });
 }
 
+export async function changePassword(email: User["email"], password: string) {
+  const existingUser = await getUserByEmail(email);
+  if (!existingUser) {
+    throw new Error("USER_NOT_FOUND");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  return prisma.password.update({
+    where: {
+      userId: existingUser.id,
+    },
+    data: {
+      hash: hashedPassword,
+    },
+  });
+}
+
 export async function deleteUserByEmail(email: User["email"]) {
   return prisma.user.delete({ where: { email } });
 }
