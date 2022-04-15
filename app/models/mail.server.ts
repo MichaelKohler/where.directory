@@ -37,6 +37,7 @@ export async function sendPasswordResetMail({
     await transporter.sendMail(message);
   } catch (error) {
     console.error("SEND_MAIL_FAILED", error);
+    return;
   }
 
   console.log("PASSWORD_RESET_MAIL_SENT", email);
