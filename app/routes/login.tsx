@@ -1,5 +1,9 @@
 import * as React from "react";
-import type { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 
@@ -37,13 +41,6 @@ export const action: ActionFunction = async ({ request }) => {
   if (typeof password !== "string") {
     return json<ActionData>(
       { errors: { password: "Password is required" } },
-      { status: 400 }
-    );
-  }
-
-  if (password.length < 8) {
-    return json<ActionData>(
-      { errors: { password: "Password is too short" } },
       { status: 400 }
     );
   }
@@ -175,6 +172,21 @@ export default function LoginPage() {
               }}
             >
               Sign up
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="text-center text-sm text-gray-500">
+            Forgot your password?{" "}
+            <Link
+              className="text-blue-500 underline"
+              to={{
+                pathname: "/password/reset",
+                search: searchParams.toString(),
+              }}
+            >
+              Reset password
             </Link>
           </div>
         </div>

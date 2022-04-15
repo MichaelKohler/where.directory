@@ -1,32 +1,26 @@
 import * as React from "react";
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useSearchParams } from "@remix-run/react";
 
 import { changePassword } from "~/models/user.server";
-import { requireUserId, requireUser } from "~/session.server";
+import { requireUser } from "~/session.server";
 
 interface ActionData {
   errors?: {
     password?: string;
     confirmPassword?: string;
+    token?: string;
+    generic?: string;
   };
   done?: boolean;
 }
-
-export const loader: LoaderFunction = async ({ request, params }) => {
-  await requireUserId(request);
-  return null;
-};
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmPassword");
+  const token = formData.get("token") || "";
 
   if (typeof password !== "string" || password === "") {
     return json<ActionData>(
@@ -49,8 +43,29 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const user = await requireUser(request);
-  await changePassword(user.email, password);
+  let user = { email: "" };
+  if (!token) {
+    // We do not want to go further if there is no token and the
+    // user is not logged in. This check here is crucial to not allow
+    // for password changes without token.
+    user = await requireUser(request);
+  }
+
+  try {
+    await changePassword(user.email, password, token.toString());
+  } catch (error) {
+    if (error instanceof Error && error.message === "PASSWORD_RESET_EXPIRED") {
+      return json<ActionData>(
+        { errors: { token: "Password reset link expired. Please try again." } },
+        { status: 200 }
+      );
+    }
+
+    return json<ActionData>(
+      { errors: { generic: "Something went wrong. Please try again." } },
+      { status: 200 }
+    );
+  }
 
   return json<ActionData>({ done: true }, { status: 200 });
 };
@@ -65,6 +80,8 @@ export default function ChangePassword() {
   const actionData = useActionData() as ActionData;
   const passwordRef = React.useRef<HTMLInputElement>(null);
   const passwordConfirmRef = React.useRef<HTMLInputElement>(null);
+  const [searchParams] = useSearchParams();
+  const resetToken = searchParams.get("token") || "";
 
   React.useEffect(() => {
     if (actionData?.errors?.password) {
@@ -82,6 +99,17 @@ export default function ChangePassword() {
   return (
     <main className="my-12 mx-auto flex min-h-full w-full max-w-md flex-col px-8">
       <Form method="post" className="space-y-6">
+        <input type="hidden" name="token" value={resetToken} />
+        {actionData?.errors?.token && (
+          <div className="pt-1 text-red-700" id="password-token-error">
+            {actionData.errors.token}
+          </div>
+        )}
+        {actionData?.errors?.generic && (
+          <div className="pt-1 text-red-700" id="password-generic-error">
+            {actionData.errors.generic}
+          </div>
+        )}
         <div>
           <label
             htmlFor="password"
