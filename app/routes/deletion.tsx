@@ -9,6 +9,7 @@ import { requireUserId, logout } from "~/session.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUserId(request);
+  return null;
 };
 
 type ActionData = {
