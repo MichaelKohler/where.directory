@@ -30,5 +30,6 @@ describe("login tests", () => {
     cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
     cy.findByLabelText(/password/i).type(loginForm.password);
     cy.findByRole("button", { name: /log in/i }).click();
+    cy.findByRole("link", { name: /trips/i }).click();
   });
 });

@@ -15,6 +15,7 @@ describe("password tests", () => {
     cy.findByRole("link", { name: /account/i }).click();
     cy.findByRole("link", { name: /change password/i }).click();
 
+    cy.findByLabelText(/current password/i).type("myreallystrongpassword");
     cy.findByLabelText(/new password/i).type(newPassword);
     cy.findByLabelText(/confirm password/i).type(newPassword);
     cy.findByRole("button", { name: /change password/i }).click();
@@ -25,6 +26,7 @@ describe("password tests", () => {
     cy.findByRole("textbox", { name: /email/i }).type(email);
     cy.findByLabelText(/password/i).type(newPassword);
     cy.findByRole("button", { name: /log in/i }).click();
+    cy.findByRole("link", { name: /trips/i }).click();
   });
 
   it("should check for non-matching passwords", () => {
@@ -34,6 +36,7 @@ describe("password tests", () => {
     cy.findByRole("link", { name: /account/i }).click();
     cy.findByRole("link", { name: /change password/i }).click();
 
+    cy.findByLabelText(/current password/i).type("myreallystrongpassword");
     cy.findByLabelText(/new password/i).type(newPassword);
     cy.findByLabelText(/confirm password/i).type("foo");
     cy.findByRole("button", { name: /change password/i }).click();
