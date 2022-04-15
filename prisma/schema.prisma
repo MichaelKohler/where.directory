@@ -26,6 +26,15 @@ model Password {
   userId String @unique
 }
 
+model PasswordReset {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+
+  token String @unique
+  email String
+}
+
 model Trip {
   id          String @id @default(cuid())
   destination String
