@@ -1,11 +1,15 @@
 import * as React from "react";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 import Alert from "@reach/alert";
 
 import { changeUsername } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  await requireUserId(request);
+};
 
 type ActionData = {
   errors?: {
@@ -40,7 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect(`/${username}`);
 };
 
-export default function ImportTripPage() {
+export default function AccountPage() {
   const actionData = useActionData() as ActionData;
   const transition = useTransition();
 
