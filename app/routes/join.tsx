@@ -13,7 +13,7 @@ import {
   getUserByUsername,
 } from "~/models/user.server";
 import { getUserId, createUserSession } from "~/session.server";
-import { validateEmail } from "~/utils";
+import { safeRedirect, validateEmail } from "~/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -34,7 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   const email = formData.get("email");
   const password = formData.get("password");
   const username = formData.get("username");
-  const redirectTo = formData.get("redirectTo");
+  const redirectTo = safeRedirect(formData.get("redirectTo"), "/trips");
 
   if (!validateEmail(email)) {
     return json<ActionData>(
@@ -86,7 +86,7 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: false,
-    redirectTo: typeof redirectTo === "string" ? redirectTo : "/trips",
+    redirectTo,
   });
 };
 
