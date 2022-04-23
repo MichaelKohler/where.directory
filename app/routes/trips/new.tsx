@@ -1,6 +1,7 @@
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import * as React from "react";
-import Map, { Marker, MapLayerMouseEvent, MarkerDragEvent } from "react-map-gl";
+import Map, { Marker } from "react-map-gl";
+import type { MapLayerMouseEvent, MarkerDragEvent } from "react-map-gl";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import {

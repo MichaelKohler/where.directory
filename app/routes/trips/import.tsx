@@ -4,7 +4,8 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useTransition } from "@remix-run/react";
 import Alert from "@reach/alert";
 
-import { createTrips, Trip } from "~/models/trip.server";
+import { createTrips } from "~/models/trip.server";
+import type { Trip } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
 
 type ActionData = {
