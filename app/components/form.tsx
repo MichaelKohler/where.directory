@@ -189,7 +189,7 @@ export default function TripForm({
           <Marker
             longitude={long}
             latitude={lat}
-            anchor="bottom"
+            anchor="center"
             draggable={true}
             onDragEnd={setLocation}
           ></Marker>
