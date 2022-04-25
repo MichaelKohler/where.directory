@@ -72,7 +72,8 @@ export default function TripDetailsPage() {
   return (
     <div>
       <h3 className="font-title text-2xl">
-        {data.trip.destination}, {data.trip.country}
+        {data.trip.secret ? "🔒" : "🌐"} {data.trip.destination},{" "}
+        {data.trip.country}
       </h3>
       <p className="py-6">
         {new Date(data.trip.from).toLocaleDateString()} -{" "}

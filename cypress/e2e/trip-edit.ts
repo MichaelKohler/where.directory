@@ -36,7 +36,7 @@ describe("trip edit tests", () => {
     cy.cleanupUser();
   });
 
-  it("should allow you to edit a trip", () => {
+  it("should edit a trip", () => {
     cy.findByRole("link", { name: /edit/i }).click();
     cy.findByRole("textbox", { name: /destination:/i })
       .clear()
@@ -45,7 +45,7 @@ describe("trip edit tests", () => {
     cy.findByText(/Berlin/i).should("exist");
   });
 
-  it("should not allow you to edit a trip if missing destination", () => {
+  it("should not edit a trip if missing destination", () => {
     cy.findByRole("link", { name: /edit/i }).click();
     cy.findByRole("textbox", { name: /destination:/i }).clear();
     cy.findByRole("button", { name: /save/i }).click();

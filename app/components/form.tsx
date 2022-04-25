@@ -249,6 +249,15 @@ export default function TripForm({
         )}
       </div>
 
+      <label className="my-4 flex w-full flex-row gap-1">
+        <input
+          type="checkbox"
+          name="secret"
+          defaultChecked={initialData?.secret || false}
+        />
+        <span>Private (no one else can see this!)</span>
+      </label>
+
       <input type="hidden" name="lat" value={lat} />
       <input type="hidden" name="long" value={long} />
 

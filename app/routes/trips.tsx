@@ -45,7 +45,7 @@ export default function TripsPage() {
                   }
                   to={trip.id}
                 >
-                  <div>🌐</div>
+                  <div>{trip.secret ? "🔒" : "🌐"}</div>
                   <div>
                     <p>
                       {trip.destination}, {trip.country}

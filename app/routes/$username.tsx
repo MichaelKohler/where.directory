@@ -9,6 +9,7 @@ import invariant from "tiny-invariant";
 import type { ExtendedTripInfo, Totals } from "~/models/trip.server";
 import { getTripListItems, getTotals } from "~/models/trip.server";
 import { getUserIdByUsername } from "~/models/user.server";
+import { getUserId } from "~/session.server";
 
 type LoaderData = {
   trips: ExtendedTripInfo[];
@@ -45,7 +46,7 @@ export const meta: MetaFunction = ({ params }) => ({
   title: `where.directory - ${params.username}`,
 });
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.username, "username not found");
 
   const user = await getUserIdByUsername(params.username);
@@ -53,7 +54,16 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw new Response("Not Found", { status: 404 });
   }
 
-  const trips = await getTripListItems({ userId: user.id });
+  let trips = await getTripListItems({ userId: user.id });
+
+  // Trips can be set to "secret", therefore we never want to
+  // show these trips to anyone else than the creator. Public
+  // is the default.
+  const currentUserId = await getUserId(request);
+  if (!currentUserId || currentUserId !== user.id) {
+    trips = trips.filter((trip) => !trip.secret);
+  }
+
   const nextTrip = getNextTrip(trips);
   const totals = getTotals(trips);
 
