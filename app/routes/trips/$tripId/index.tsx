@@ -4,7 +4,7 @@ import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, Link, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import type { Trip } from "~/models/trip.server";
 import { deleteTrip } from "~/models/trip.server";
@@ -97,7 +97,18 @@ export default function TripDetailsPage() {
           </Source>
         </Map>
       </section>
+
       <hr className="my-4" />
+
+      <Link
+        to="edit"
+        className="rounded bg-slate-600 py-2 px-4 text-center text-white hover:bg-slate-500 active:bg-slate-500"
+      >
+        Edit
+      </Link>
+
+      <hr className="my-4" />
+
       <small className="text-xs">
         Pressing the "Delete" button will instantly delete this trip.
       </small>
