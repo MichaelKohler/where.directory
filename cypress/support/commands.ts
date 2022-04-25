@@ -16,6 +16,16 @@ declare global {
       login: typeof login;
 
       /**
+       * Logs out the current user.
+       *
+       * @returns {typeof logout}
+       * @memberof Chainable
+       * @example
+       *    cy.logout()
+       */
+      logout: typeof logout;
+
+      /**
        * Deletes the current @user
        *
        * @returns {typeof cleanupUser}
@@ -68,7 +78,12 @@ function deleteUserByEmail(email: string) {
   cy.clearCookie("__session");
 }
 
+function logout() {
+  cy.clearCookie("__session");
+}
+
 Cypress.Commands.add("login", login);
+Cypress.Commands.add("logout", logout);
 Cypress.Commands.add("cleanupUser", cleanupUser);
 
 /*

@@ -29,6 +29,7 @@ export const action: ActionFunction = async ({ request }) => {
   const long = formData.get("long");
   const from = formData.get("from");
   const to = formData.get("to");
+  const secret = formData.get("secret") === "on";
 
   if (typeof from !== "string" || from.length === 0) {
     return json<ActionData>(
@@ -95,6 +96,7 @@ export const action: ActionFunction = async ({ request }) => {
     long,
     from,
     to,
+    secret,
     userId,
   });
 

@@ -79,6 +79,7 @@ export function createTrips(trips: Trip[], userId: User["id"]) {
             long: trip.long,
             from: new Date(trip.from),
             to: new Date(trip.to),
+            secret: trip.secret,
             user: {
               connect: {
                 id: userId,
@@ -103,8 +104,9 @@ export function createTrip({
   long,
   from,
   to,
+  secret = false,
   userId,
-}: Pick<Trip, "destination" | "description" | "country"> & {
+}: Pick<Trip, "destination" | "description" | "country" | "secret"> & {
   userId: User["id"];
   to: string;
   from: string;
@@ -122,6 +124,7 @@ export function createTrip({
       long: parseFloat(long),
       from: new Date(from),
       to: new Date(to),
+      secret,
       user: {
         connect: {
           id: userId,
@@ -141,7 +144,8 @@ export function updateTrip({
   long,
   from,
   to,
-}: Pick<Trip, "id" | "destination" | "description" | "country"> & {
+  secret = false,
+}: Pick<Trip, "id" | "destination" | "description" | "country" | "secret"> & {
   to: string;
   from: string;
   flights: string;
@@ -159,6 +163,7 @@ export function updateTrip({
       long: parseFloat(long),
       from: new Date(from),
       to: new Date(to),
+      secret,
     },
   });
 }
