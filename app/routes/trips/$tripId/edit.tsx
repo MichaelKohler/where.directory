@@ -47,6 +47,7 @@ export const action: ActionFunction = async ({ request }) => {
   const from = formData.get("from");
   const to = formData.get("to");
   const secret = formData.get("secret") === "on";
+  const hideUpcoming = formData.get("hideUpcoming") === "on";
 
   if (typeof id !== "string" || id.length === 0) {
     return json<ActionData>(
@@ -136,6 +137,7 @@ export const action: ActionFunction = async ({ request }) => {
     from,
     to,
     secret,
+    hideUpcoming,
   });
 
   return redirect(`/trips/${trip.id}`);
