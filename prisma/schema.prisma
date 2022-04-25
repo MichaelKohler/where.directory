@@ -36,16 +36,17 @@ model PasswordReset {
 }
 
 model Trip {
-  id          String @id @default(cuid())
-  destination String
-  country     String
-  description String
-  flights     Int
-  lat         Float
-  long        Float
-  from        DateTime
-  to          DateTime
-  secret      Boolean @default(false)
+  id           String @id @default(cuid())
+  destination  String
+  country      String
+  description  String
+  flights      Int
+  lat          Float
+  long         Float
+  from         DateTime
+  to           DateTime
+  secret       Boolean @default(false)
+  hideUpcoming Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

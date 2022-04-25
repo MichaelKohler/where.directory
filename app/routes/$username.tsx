@@ -56,12 +56,24 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   let trips = await getTripListItems({ userId: user.id });
 
-  // Trips can be set to "secret", therefore we never want to
-  // show these trips to anyone else than the creator. Public
-  // is the default.
   const currentUserId = await getUserId(request);
   if (!currentUserId || currentUserId !== user.id) {
-    trips = trips.filter((trip) => !trip.secret);
+    trips = trips.filter((trip) => {
+      // Only show trips that are not being hidden for being in the
+      // future.
+      if (trip.hideUpcoming && trip.to > new Date()) {
+        return false;
+      }
+
+      // Trips can be set to "secret", therefore we never want to
+      // show these trips to anyone else than the creator. Public
+      // is the default.
+      if (trip.secret) {
+        return false;
+      }
+
+      return true;
+    });
   }
 
   const nextTrip = getNextTrip(trips);

@@ -39,6 +39,8 @@ export default function TripForm({
   const transition = useTransition();
   const [lat, setLatitude] = React.useState<number>(0);
   const [long, setLongitude] = React.useState<number>(0);
+  const [showHideUpcomingCheckbox, setShowHideUpcomingCheckbox] =
+    React.useState(initialData?.hideUpcoming || false);
 
   const fromRef = React.useRef<HTMLInputElement>(null);
   const toRef = React.useRef<HTMLInputElement>(null);
@@ -50,6 +52,24 @@ export default function TripForm({
   const setLocation = (event: MarkerDragEvent | MapLayerMouseEvent) => {
     setLatitude(event.lngLat.lat);
     setLongitude(event.lngLat.lng);
+  };
+
+  const decideToShowHideUpcomingCheckbox = (date: Date) => {
+    const today = new Date();
+    if (date > today) {
+      setShowHideUpcomingCheckbox(true);
+      return;
+    }
+
+    setShowHideUpcomingCheckbox(false);
+  };
+
+  const handleUntilDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target && event.target.value) {
+      decideToShowHideUpcomingCheckbox(new Date(event.target.value));
+    }
   };
 
   const isEdit = !!initialData?.id;
@@ -74,6 +94,8 @@ export default function TripForm({
     if (initialData) {
       setLatitude(initialData.lat);
       setLongitude(initialData.long);
+
+      decideToShowHideUpcomingCheckbox(new Date(initialData.to));
     }
   }, [initialData]);
 
@@ -100,7 +122,7 @@ export default function TripForm({
               actionData?.errors?.from ? "from-error" : undefined
             }
             data-testid="new-trip-from-input"
-            defaultValue={initialData?.from?.substr(0, 10)}
+            defaultValue={initialData?.from?.substring(0, 10)}
           />
         </label>
         {actionData?.errors?.from && (
@@ -117,11 +139,12 @@ export default function TripForm({
             ref={toRef}
             type="date"
             name="to"
+            onChange={handleUntilDateChange}
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors?.to ? true : undefined}
             aria-errormessage={actionData?.errors?.to ? "to-error" : undefined}
             data-testid="new-trip-to-input"
-            defaultValue={initialData?.to?.substr(0, 10)}
+            defaultValue={initialData?.to?.substring(0, 10)}
           />
         </label>
         {actionData?.errors?.to && (
@@ -257,6 +280,17 @@ export default function TripForm({
         />
         <span>Private (no one else can see this!)</span>
       </label>
+
+      {showHideUpcomingCheckbox && (
+        <label className="mb-4 flex w-full flex-row gap-1">
+          <input
+            type="checkbox"
+            name="hideUpcoming"
+            defaultChecked={initialData?.hideUpcoming || false}
+          />
+          <span>Do not show on public profile until trip is over</span>
+        </label>
+      )}
 
       <input type="hidden" name="lat" value={lat} />
       <input type="hidden" name="long" value={long} />

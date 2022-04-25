@@ -80,6 +80,7 @@ export function createTrips(trips: Trip[], userId: User["id"]) {
             from: new Date(trip.from),
             to: new Date(trip.to),
             secret: trip.secret,
+            hideUpcoming: trip.hideUpcoming,
             user: {
               connect: {
                 id: userId,
@@ -105,8 +106,12 @@ export function createTrip({
   from,
   to,
   secret = false,
+  hideUpcoming = false,
   userId,
-}: Pick<Trip, "destination" | "description" | "country" | "secret"> & {
+}: Pick<
+  Trip,
+  "destination" | "description" | "country" | "secret" | "hideUpcoming"
+> & {
   userId: User["id"];
   to: string;
   from: string;
@@ -125,6 +130,7 @@ export function createTrip({
       from: new Date(from),
       to: new Date(to),
       secret,
+      hideUpcoming,
       user: {
         connect: {
           id: userId,
@@ -145,7 +151,11 @@ export function updateTrip({
   from,
   to,
   secret = false,
-}: Pick<Trip, "id" | "destination" | "description" | "country" | "secret"> & {
+  hideUpcoming = false,
+}: Pick<
+  Trip,
+  "id" | "destination" | "description" | "country" | "secret" | "hideUpcoming"
+> & {
   to: string;
   from: string;
   flights: string;
@@ -164,6 +174,7 @@ export function updateTrip({
       from: new Date(from),
       to: new Date(to),
       secret,
+      hideUpcoming,
     },
   });
 }
