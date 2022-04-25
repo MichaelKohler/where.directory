@@ -45,7 +45,7 @@ export const meta: MetaFunction = ({ params }) => ({
   title: `where.directory - ${params.username}`,
 });
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   invariant(params.username, "username not found");
 
   const user = await getUserIdByUsername(params.username);
@@ -133,7 +133,7 @@ export default function UserDetailsPage() {
             <th className="w-2/12 pl-2">Destination</th>
             <th className="w-2/12 pl-2">Country</th>
             <th className="w-5/12 pl-2">Description</th>
-            <th className="w-1/12 pl-2">Flights</th>
+            <th className="hidden w-1/12 pl-2 pr-2 md:block">Flights</th>
           </tr>
         </thead>
         <tbody className="divide-y-2 divide-slate-100">
@@ -149,7 +149,7 @@ export default function UserDetailsPage() {
               <td className="pl-2">{trip.destination}</td>
               <td className="pl-2">{trip.country}</td>
               <td className="pl-2">{trip.description}</td>
-              <td className="pl-2">{trip.flights}</td>
+              <td className="hidden pl-2 pr-2 md:block">{trip.flights}</td>
             </tr>
           ))}
         </tbody>
