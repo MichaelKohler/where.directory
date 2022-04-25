@@ -4,6 +4,11 @@ import { prisma } from "~/db.server";
 
 export type { Trip } from "@prisma/client";
 
+export type TripClientResponse = Trip & {
+  from: string;
+  to: string;
+};
+
 export type ExtendedTripInfo = Trip & {
   isFuture: boolean;
 };
@@ -122,6 +127,38 @@ export function createTrip({
           id: userId,
         },
       },
+    },
+  });
+}
+
+export function updateTrip({
+  id,
+  destination,
+  country,
+  description,
+  flights,
+  lat,
+  long,
+  from,
+  to,
+}: Pick<Trip, "id" | "destination" | "description" | "country"> & {
+  to: string;
+  from: string;
+  flights: string;
+  lat: string;
+  long: string;
+}) {
+  return prisma.trip.update({
+    where: { id },
+    data: {
+      destination,
+      country,
+      description,
+      flights: parseInt(flights, 10),
+      lat: parseFloat(lat),
+      long: parseFloat(long),
+      from: new Date(from),
+      to: new Date(to),
     },
   });
 }
