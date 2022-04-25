@@ -18,6 +18,7 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
+import React from "react";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -39,7 +40,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
 };
 
-function App({ children }) {
+function App({ children }: { children?: React.ReactNode }) {
   return (
     <html lang="en" className="h-full">
       <head>
