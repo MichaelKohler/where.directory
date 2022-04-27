@@ -4,6 +4,7 @@ import type { MapLayerMouseEvent, MarkerDragEvent } from "react-map-gl";
 import {
   Form,
   useActionData,
+  useMatches,
   useLoaderData,
   useTransition,
 } from "@remix-run/react";
@@ -41,6 +42,7 @@ export default function TripForm({
   const [long, setLongitude] = React.useState<number>(0);
   const [showHideUpcomingCheckbox, setShowHideUpcomingCheckbox] =
     React.useState(initialData?.hideUpcoming || false);
+  const matches = useMatches();
 
   const fromRef = React.useRef<HTMLInputElement>(null);
   const toRef = React.useRef<HTMLInputElement>(null);
@@ -48,6 +50,23 @@ export default function TripForm({
   const countryRef = React.useRef<HTMLInputElement>(null);
   const descriptionRef = React.useRef<HTMLTextAreaElement>(null);
   const flightsRef = React.useRef<HTMLInputElement>(null);
+
+  const isEdit = !!initialData?.id;
+
+  const parentRouteData = matches.find(
+    (match) => match.id === "routes/trips"
+  )?.data;
+  const trips = parentRouteData?.tripListItems;
+
+  const handleLocationCopy = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.value === "") {
+      return;
+    }
+
+    const [lat, long] = event.target.value.split(";");
+    setLatitude(parseFloat(lat));
+    setLongitude(parseFloat(long));
+  };
 
   const setLocation = (event: MarkerDragEvent | MapLayerMouseEvent) => {
     setLatitude(event.lngLat.lat);
@@ -71,8 +90,6 @@ export default function TripForm({
       decideToShowHideUpcomingCheckbox(new Date(event.target.value));
     }
   };
-
-  const isEdit = !!initialData?.id;
 
   React.useEffect(() => {
     if (actionData?.errors?.to) {
@@ -188,6 +205,30 @@ export default function TripForm({
             }
             defaultValue={initialData?.country}
           />
+        </label>
+        {actionData?.errors?.country && (
+          <Alert className="pt-1 text-red-700" id="country=error">
+            {actionData.errors.country}
+          </Alert>
+        )}
+      </div>
+
+      <div>
+        <label className="flex w-full flex-col gap-1">
+          <span>Copy location from previous trip: </span>
+          <select
+            name="usedOnClientOnlyPreviousTripCopyLocation"
+            className="flex-1 rounded-md border-2 border-blue-500 px-3 py-2 leading-loose"
+            onChange={handleLocationCopy}
+          >
+            <option value="">Select a trip to copy from</option>
+            {trips?.map((trip: TripClientResponse) => (
+              <option key={trip.id} value={`${trip.lat};${trip.long}`}>
+                {new Date(trip.from).toLocaleDateString()} - {trip.destination},{" "}
+                {trip.country}
+              </option>
+            ))}
+          </select>
         </label>
         {actionData?.errors?.country && (
           <Alert className="pt-1 text-red-700" id="country=error">
