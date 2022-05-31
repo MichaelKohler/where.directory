@@ -90,18 +90,21 @@ export default function Header() {
                 <Link
                   to="/trips"
                   className="text-white-700 flex items-center justify-center py-4 pl-0 text-base font-semibold"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Trips
                 </Link>
                 <Link
                   to={`/${user.username}`}
                   className="text-white-700 flex items-center justify-center py-4 text-base font-semibold"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Profile
                 </Link>
                 <Link
                   to="/account"
                   className="text-white-700 flex items-center justify-center py-4 text-base font-semibold"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Account
                 </Link>
