@@ -140,6 +140,7 @@ export default function UserDetailsPage() {
           mapStyle="mapbox://styles/mapbox/light-v10"
           mapboxAccessToken={data.mapboxToken}
           renderWorldCopies={false}
+          cooperativeGestures={true}
         >
           <Source id="data-source" type="geojson" data={geojson}>
             <Layer {...layerStyle} />
@@ -148,30 +149,41 @@ export default function UserDetailsPage() {
       </section>
 
       <table className="mt-7 text-left leading-8">
-        <thead className="text-bold bg-slate-800 font-title text-white">
+        <thead className="text-bold hidden bg-slate-800 font-title text-white sm:table-header-group ">
           <tr>
             <th className="w-1/12 pl-2">From</th>
             <th className="w-1/12 pl-2">Until</th>
-            <th className="w-2/12 pl-2">Destination</th>
+            <th className="w-2/12 pl-4">Destination</th>
             <th className="w-2/12 pl-2">Country</th>
             <th className="w-5/12 pl-2">Description</th>
-            <th className="hidden w-1/12 pl-2 pr-2 md:block">Flights</th>
+            <th className="hidden w-1/12 pl-2 pr-2 lg:block">Flights</th>
           </tr>
         </thead>
-        <tbody className="divide-y-2 divide-slate-100">
+        <tbody className="divide-y-2 divide-slate-100 text-center sm:text-left">
           {data.trips.map((trip) => (
             <tr
               key={trip.id}
               className={trip.isFuture ? `font-bold uppercase` : ``}
             >
-              <td className="pl-2">
+              <td className="inline-block pt-5 sm:table-cell sm:pt-0 sm:pl-2">
                 {new Date(trip.from).toLocaleDateString()}
               </td>
-              <td className="pl-2">{new Date(trip.to).toLocaleDateString()}</td>
-              <td className="pl-2">{trip.destination}</td>
-              <td className="pl-2">{trip.country}</td>
-              <td className="pl-2">{trip.description}</td>
-              <td className="hidden pl-2 pr-2 md:block">{trip.flights}</td>
+              <td className="inline-block pt-5 sm:table-cell sm:pt-0 sm:pl-2">
+                <span className="sm:hidden">&nbsp;-&nbsp;</span>
+                {new Date(trip.to).toLocaleDateString()}
+              </td>
+              <td className="block text-lg sm:table-cell sm:pl-4 sm:text-base">
+                {trip.destination}
+              </td>
+              <td className="block text-lg sm:table-cell sm:pl-2 sm:text-base">
+                {trip.country}
+              </td>
+              <td className="block pb-5 sm:table-cell sm:pl-2">
+                {trip.description}
+              </td>
+              <td className="hidden lg:block lg:pl-2 lg:pr-2">
+                {trip.flights}
+              </td>
             </tr>
           ))}
         </tbody>
