@@ -44,7 +44,7 @@
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.2.0",
+    "@faker-js/faker": "^6.3.1",
     "@remix-run/dev": "^1.5.1",
     "@remix-run/eslint-config": "^1.5.1",
     "@testing-library/cypress": "^8.0.3",
