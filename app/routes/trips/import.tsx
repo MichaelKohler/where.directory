@@ -2,7 +2,6 @@ import * as React from "react";
 import type { ActionFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useTransition } from "@remix-run/react";
-import Alert from "@reach/alert";
 
 import { createTrips } from "~/models/trip.server";
 import type { Trip } from "~/models/trip.server";
@@ -119,9 +118,9 @@ export default function ImportTripPage() {
           />
         </label>
         {actionData?.errors?.json && (
-          <Alert className="pt-1 text-red-700" id="json=error">
+          <div className="pt-1 text-red-700" id="json=error">
             {actionData.errors.json}
-          </Alert>
+          </div>
         )}
       </div>
       <button

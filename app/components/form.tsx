@@ -8,7 +8,6 @@ import {
   useLoaderData,
   useTransition,
 } from "@remix-run/react";
-import Alert from "@reach/alert";
 
 import type { TripClientResponse } from "~/models/trip.server";
 
@@ -143,9 +142,9 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors?.from && (
-          <Alert className="pt-1 text-red-700" id="from=error">
+          <div className="pt-1 text-red-700" id="from=error">
             {actionData.errors.from}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -165,9 +164,9 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors?.to && (
-          <Alert className="pt-1 text-red-700" id="to=error">
+          <div className="pt-1 text-red-700" id="to=error">
             {actionData.errors.to}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -186,9 +185,9 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors?.destination && (
-          <Alert className="pt-1 text-red-700" id="destination=error">
+          <div className="pt-1 text-red-700" id="destination=error">
             {actionData.errors.destination}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -207,9 +206,9 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors?.country && (
-          <Alert className="pt-1 text-red-700" id="country=error">
+          <div className="pt-1 text-red-700" id="country=error">
             {actionData.errors.country}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -231,9 +230,9 @@ export default function TripForm({
           </select>
         </label>
         {actionData?.errors?.country && (
-          <Alert className="pt-1 text-red-700" id="country=error">
+          <div className="pt-1 text-red-700" id="country=error">
             {actionData.errors.country}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -259,14 +258,14 @@ export default function TripForm({
           ></Marker>
         </Map>
         {actionData?.errors?.lat && (
-          <Alert className="pt-1 text-red-700" id="lat=error">
+          <div className="pt-1 text-red-700" id="lat=error">
             {actionData.errors.lat}
-          </Alert>
+          </div>
         )}
         {actionData?.errors?.long && (
-          <Alert className="pt-1 text-red-700" id="long=error">
+          <div className="pt-1 text-red-700" id="long=error">
             {actionData.errors.long}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -285,9 +284,9 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors?.description && (
-          <Alert className="pt-1 text-red-700" id="description=error">
+          <div className="pt-1 text-red-700" id="description=error">
             {actionData.errors.description}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -307,9 +306,9 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors?.flights && (
-          <Alert className="pt-1 text-red-700" id="flights=error">
+          <div className="pt-1 text-red-700" id="flights=error">
             {actionData.errors.flights}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -339,9 +338,9 @@ export default function TripForm({
       {isEdit && <input type="hidden" name="id" value={initialData?.id} />}
 
       {actionData?.errors?.generic && (
-        <Alert className="pt-1 text-red-700" id="generic=error">
+        <div className="pt-1 text-red-700" id="generic=error">
           {actionData.errors.generic}
-        </Alert>
+        </div>
       )}
 
       <button

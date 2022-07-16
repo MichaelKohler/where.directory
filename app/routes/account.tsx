@@ -2,7 +2,6 @@ import * as React from "react";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useTransition } from "@remix-run/react";
-import Alert from "@reach/alert";
 
 import { changeUsername } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
@@ -83,9 +82,9 @@ export default function AccountPage() {
             />
           </label>
           {actionData?.errors?.username && (
-            <Alert className="pt-1 text-red-700" id="username=error">
+            <div className="pt-1 text-red-700" id="username=error">
               {actionData.errors.username}
-            </Alert>
+            </div>
           )}
         </div>
         <button

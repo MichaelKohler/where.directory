@@ -2,7 +2,6 @@ import * as React from "react";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData, useTransition } from "@remix-run/react";
-import Alert from "@reach/alert";
 
 import { deleteUserByUserId } from "~/models/user.server";
 import { requireUserId, logout } from "~/session.server";
@@ -49,9 +48,9 @@ export default function DeletionPage() {
         }}
       >
         {actionData?.errors?.deletion && (
-          <Alert className="pt-1 text-red-700" id="deletion=error">
+          <div className="pt-1 text-red-700" id="deletion=error">
             {actionData.errors.deletion}
-          </Alert>
+          </div>
         )}
 
         <p>
