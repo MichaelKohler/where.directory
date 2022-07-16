@@ -2,21 +2,14 @@ import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import type { ExtendedTripInfo, Totals } from "~/models/trip.server";
+import type { ExtendedTripInfo } from "~/models/trip.server";
 import { getTripListItems, getTotals } from "~/models/trip.server";
 import { getUserIdByUsername } from "~/models/user.server";
 import { getUserId } from "~/session.server";
-
-type LoaderData = {
-  trips: ExtendedTripInfo[];
-  nextTrip?: ExtendedTripInfo;
-  totals: Totals;
-  mapboxToken: string;
-};
 
 const layerStyle: CircleLayer = {
   id: "point",
@@ -38,7 +31,7 @@ function getNextTrip(
   }
 }
 
-export function links() {
+export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
 }
 
@@ -46,7 +39,7 @@ export const meta: MetaFunction = ({ params }) => ({
   title: `where.directory - ${params.username}`,
 });
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export async function loader({ request, params }: LoaderArgs) {
   invariant(params.username, "username not found");
 
   const user = await getUserIdByUsername(params.username);
@@ -81,11 +74,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
 
-  return json<LoaderData>({ trips, nextTrip, totals, mapboxToken });
-};
+  return json({ trips, nextTrip, totals, mapboxToken });
+}
 
 export default function UserDetailsPage() {
-  const data = useLoaderData() as LoaderData;
+  const data = useLoaderData<typeof loader>();
 
   const geojson: FeatureCollection<Geometry, GeoJsonProperties> = {
     type: "FeatureCollection",

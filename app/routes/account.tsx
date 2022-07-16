@@ -1,30 +1,24 @@
 import * as React from "react";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 
 import { changeUsername } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   await requireUserId(request);
   return null;
-};
+}
 
-type ActionData = {
-  errors?: {
-    username?: string;
-  };
-};
-
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
   const username = formData.get("username");
 
   if (typeof username !== "string" || username.length === 0) {
-    return json<ActionData>(
+    return json(
       { errors: { username: "New username is required" } },
       { status: 400 }
     );
@@ -34,7 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
     await changeUsername(username, userId);
   } catch (error) {
     if ((error as Error).message === "USERNAME_ALREADY_EXISTS") {
-      return json<ActionData>(
+      return json(
         { errors: { username: "Username already exists" } },
         { status: 400 }
       );
@@ -42,16 +36,16 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   return redirect(`/${username}`);
-};
+}
 
 export default function AccountPage() {
-  const actionData = useActionData() as ActionData;
+  const actionData = useActionData<typeof action>();
   const transition = useTransition();
 
   const usernameRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
-    if (actionData?.errors?.username) {
+    if (actionData?.errors.username) {
       usernameRef.current?.focus();
     }
   }, [actionData]);
@@ -74,14 +68,14 @@ export default function AccountPage() {
               ref={usernameRef}
               name="username"
               className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
-              aria-invalid={actionData?.errors?.username ? true : undefined}
+              aria-invalid={actionData?.errors.username ? true : undefined}
               aria-errormessage={
-                actionData?.errors?.username ? "username-error" : undefined
+                actionData?.errors.username ? "username-error" : undefined
               }
               data-testid="change-username-input"
             />
           </label>
-          {actionData?.errors?.username && (
+          {actionData?.errors.username && (
             <div className="pt-1 text-red-700" id="username=error">
               {actionData.errors.username}
             </div>

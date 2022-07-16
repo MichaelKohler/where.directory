@@ -1,25 +1,19 @@
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import invariant from "tiny-invariant";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import TripForm from "~/components/form";
-import type { ActionData } from "~/components/form";
+import type { TripClientResponse } from "~/models/trip.server";
 import { getTrip, updateTrip } from "~/models/trip.server";
-import type { Trip, TripClientResponse } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
 
-type LoaderData = {
-  trip: Trip;
-  mapboxToken: string;
-};
-
-export function links() {
+export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request);
   invariant(params.tripId, "tripId not found");
 
@@ -30,10 +24,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
 
-  return json<LoaderData>({ trip, mapboxToken });
-};
+  return json({ trip, mapboxToken });
+}
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
@@ -49,67 +43,82 @@ export const action: ActionFunction = async ({ request }) => {
   const secret = formData.get("secret") === "on";
   const hideUpcoming = formData.get("hideUpcoming") === "on";
 
+  const errors = {
+    generic: null,
+    from: null,
+    to: null,
+    destination: null,
+    country: null,
+    description: null,
+    flights: null,
+    lat: null,
+    long: null,
+  };
+
   if (typeof id !== "string" || id.length === 0) {
-    return json<ActionData>(
+    return json(
       {
-        errors: { generic: "ID is required. This is a bug with the website!" },
+        errors: {
+          ...errors,
+          generic: "ID is required. This is a bug with the website!",
+        },
       },
       { status: 400 }
     );
   }
 
   if (typeof from !== "string" || from.length === 0) {
-    return json<ActionData>(
-      { errors: { from: "From date is required and must be text" } },
+    return json(
+      { errors: { ...errors, from: "From date is required and must be text" } },
       { status: 400 }
     );
   }
 
   if (typeof to !== "string" || to.length === 0) {
-    return json<ActionData>(
-      { errors: { to: "To date is required and must be text" } },
+    return json(
+      { errors: { ...errors, to: "To date is required and must be text" } },
       { status: 400 }
     );
   }
 
   if (typeof destination !== "string" || destination.length === 0) {
-    return json<ActionData>(
-      { errors: { destination: "Destination is required" } },
+    return json(
+      { errors: { ...errors, destination: "Destination is required" } },
       { status: 400 }
     );
   }
 
   if (typeof country !== "string" || country.length === 0) {
-    return json<ActionData>(
-      { errors: { country: "Country is required" } },
+    return json(
+      { errors: { ...errors, country: "Country is required" } },
       { status: 400 }
     );
   }
 
   if (typeof description !== "string") {
-    return json<ActionData>(
-      { errors: { description: "Description must be text" } },
+    return json(
+      { errors: { ...errors, description: "Description must be text" } },
       { status: 400 }
     );
   }
 
   if (typeof flights !== "string" || flights.length === 0) {
-    return json<ActionData>(
-      { errors: { flights: "Flights is required" } },
+    return json(
+      { errors: { ...errors, flights: "Flights is required" } },
       { status: 400 }
     );
   }
 
   if (typeof lat !== "string" || lat.length === 0) {
-    return json<ActionData>(
-      { errors: { lat: "Latitude is required" } },
+    return json(
+      { errors: { ...errors, lat: "Latitude is required" } },
       { status: 400 }
     );
   }
 
   if (typeof long !== "string" || long.length === 0) {
-    return json<ActionData>(
-      { errors: { long: "Longitude is required" } },
+    return json(
+      { errors: { ...errors, long: "Longitude is required" } },
       { status: 400 }
     );
   }
@@ -120,8 +129,8 @@ export const action: ActionFunction = async ({ request }) => {
   });
 
   if (!existingTrip) {
-    return json<ActionData>(
-      { errors: { generic: "Trip not found." } },
+    return json(
+      { errors: { ...errors, generic: "Trip not found." } },
       { status: 404 }
     );
   }
@@ -141,12 +150,16 @@ export const action: ActionFunction = async ({ request }) => {
   });
 
   return redirect(`/trips/${trip.id}`);
-};
+}
 
 export default function EditTripPage() {
-  const data = useLoaderData() as LoaderData;
+  const data = useLoaderData();
 
-  // Dates get serialized and therefore we can't use the Trip type directly
+  // TODO: check back here once it's clear how serialized
+  // data should be handled in terms of types. So far this was
+  // not clear to me on how it's meant to be typed for JSON
+  // object with a serialized Date type.
+  // https://github.com/remix-run/remix/blob/main/decisions/0003-infer-types-for-useloaderdata-and-useactiondata-from-loader-and-action-via-generics.md
   const trip = data.trip as TripClientResponse;
 
   return <TripForm initialData={trip} />;

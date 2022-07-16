@@ -1,39 +1,33 @@
 import * as React from "react";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData, useTransition } from "@remix-run/react";
 
 import { deleteUserByUserId } from "~/models/user.server";
 import { requireUserId, logout } from "~/session.server";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   await requireUserId(request);
   return null;
-};
+}
 
-type ActionData = {
-  errors?: {
-    deletion?: string;
-  };
-};
-
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const userId = await requireUserId(request);
 
   try {
     await deleteUserByUserId(userId);
   } catch (error) {
-    return json<ActionData>(
+    return json(
       { errors: { deletion: "Could not delete user. Please try again." } },
       { status: 500 }
     );
   }
 
   return logout(request);
-};
+}
 
 export default function DeletionPage() {
-  const actionData = useActionData() as ActionData;
+  const actionData = useActionData<typeof action>();
   const transition = useTransition();
 
   return (
@@ -47,7 +41,7 @@ export default function DeletionPage() {
           width: "100%",
         }}
       >
-        {actionData?.errors?.deletion && (
+        {actionData?.errors.deletion && (
           <div className="pt-1 text-red-700" id="deletion=error">
             {actionData.errors.deletion}
           </div>

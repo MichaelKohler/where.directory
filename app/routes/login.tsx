@@ -1,9 +1,5 @@
 import * as React from "react";
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionArgs, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 
@@ -11,36 +7,34 @@ import { verifyLogin } from "~/models/user.server";
 import { createUserSession, getUserId } from "~/session.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
   return json({});
-};
-
-interface ActionData {
-  errors?: {
-    email?: string;
-    password?: string;
-  };
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/trips");
   const remember = formData.get("remember");
 
+  const errors = {
+    email: null,
+    password: null,
+  };
+
   if (!validateEmail(email)) {
-    return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
+    return json(
+      { errors: { ...errors, email: "Email is invalid" } },
       { status: 400 }
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
-    return json<ActionData>(
-      { errors: { password: "Password is required" } },
+    return json(
+      { errors: { ...errors, password: "Password is required" } },
       { status: 400 }
     );
   }
@@ -48,8 +42,8 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await verifyLogin(email, password);
 
   if (!user) {
-    return json<ActionData>(
-      { errors: { email: "Invalid email or password" } },
+    return json(
+      { errors: { ...errors, email: "Invalid email or password" } },
       { status: 400 }
     );
   }
@@ -60,25 +54,25 @@ export const action: ActionFunction = async ({ request }) => {
     remember: remember === "on" ? true : false,
     redirectTo,
   });
-};
+}
 
-export const meta: MetaFunction = () => {
+export function meta(): ReturnType<MetaFunction> {
   return {
     title: "Login",
   };
-};
+}
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/trips";
-  const actionData = useActionData() as ActionData;
+  const actionData = useActionData<typeof action>();
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
-    if (actionData?.errors?.email) {
+    if (actionData?.errors.email) {
       emailRef.current?.focus();
-    } else if (actionData?.errors?.password) {
+    } else if (actionData?.errors.password) {
       passwordRef.current?.focus();
     }
   }, [actionData]);
@@ -102,11 +96,11 @@ export default function LoginPage() {
               name="email"
               type="email"
               autoComplete="email"
-              aria-invalid={actionData?.errors?.email ? true : undefined}
+              aria-invalid={actionData?.errors.email ? true : undefined}
               aria-describedby="email-error"
               className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
             />
-            {actionData?.errors?.email && (
+            {actionData?.errors.email && (
               <div className="pt-1 text-red-700" id="email-error">
                 {actionData.errors.email}
               </div>
@@ -128,11 +122,11 @@ export default function LoginPage() {
               name="password"
               type="password"
               autoComplete="current-password"
-              aria-invalid={actionData?.errors?.password ? true : undefined}
+              aria-invalid={actionData?.errors.password ? true : undefined}
               aria-describedby="password-error"
               className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
             />
-            {actionData?.errors?.password && (
+            {actionData?.errors.password && (
               <div className="pt-1 text-red-700" id="password-error">
                 {actionData.errors.password}
               </div>

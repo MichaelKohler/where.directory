@@ -1,26 +1,24 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
 import { getTripListItems } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
 
-type LoaderData = {
-  tripListItems: Awaited<ReturnType<typeof getTripListItems>>;
-};
+export function meta(): ReturnType<MetaFunction> {
+  return {
+    title: "where.directory - Dashboard",
+  };
+}
 
-export const meta: MetaFunction = () => ({
-  title: "where.directory - Dashboard",
-});
-
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const userId = await requireUserId(request);
   const tripListItems = await getTripListItems({ userId });
-  return json<LoaderData>({ tripListItems });
-};
+  return json({ tripListItems });
+}
 
 export default function TripsPage() {
-  const data = useLoaderData() as LoaderData;
+  const data = useLoaderData<typeof loader>();
 
   return (
     <main className="flex min-h-screen bg-white">

@@ -1,21 +1,16 @@
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { countTrips } from "~/models/trip.server";
 import { countUsers } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
-type LoaderData = {
-  users: number;
-  trips: number;
-};
-
-export const loader: LoaderFunction = async ({ request, params }) => {
+export async function loader({ request, params }: LoaderArgs) {
   await requireUserId(request);
 
   const [trips, users] = await Promise.all([countTrips(), countUsers()]);
 
-  return json<LoaderData>({
+  return json({
     users,
     trips,
   });
-};
+}

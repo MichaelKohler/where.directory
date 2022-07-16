@@ -1,9 +1,5 @@
 import * as React from "react";
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionArgs, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 
@@ -11,51 +7,47 @@ import { triggerPasswordReset } from "~/models/password.server";
 import { getUserId } from "~/session.server";
 import { validateEmail } from "~/utils";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
   // Instead of using the password reset request form for logged in
   // users, use the change password form directly
   if (userId) return redirect("/password/change");
   return json({});
-};
-
-interface ActionData {
-  errors?: {
-    email?: string;
-    password?: string;
-  };
-  done?: boolean;
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
 
+  const errors = {
+    email: null,
+  };
+
   if (!validateEmail(email)) {
-    return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
+    return json(
+      { errors: { email: "Email is invalid" }, done: false },
       { status: 400 }
     );
   }
 
   triggerPasswordReset(email);
 
-  return json<ActionData>({ done: true }, { status: 200 });
-};
+  return json({ done: true, errors }, { status: 200 });
+}
 
-export const meta: MetaFunction = () => {
+export function meta(): ReturnType<MetaFunction> {
   return {
     title: "Password Reset",
   };
-};
+}
 
 export default function PasswordResetPage() {
-  const actionData = useActionData() as ActionData;
+  const actionData = useActionData<typeof action>();
   const emailRef = React.useRef<HTMLInputElement>(null);
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
 
   React.useEffect(() => {
-    if (actionData?.errors?.email) {
+    if (actionData?.errors.email) {
       emailRef.current?.focus();
     }
 
@@ -82,11 +74,11 @@ export default function PasswordResetPage() {
             name="email"
             type="email"
             autoComplete="email"
-            aria-invalid={actionData?.errors?.email ? true : undefined}
+            aria-invalid={actionData?.errors.email ? true : undefined}
             aria-describedby="email-error"
             className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
           />
-          {actionData?.errors?.email && (
+          {actionData?.errors.email && (
             <div className="pt-1 text-red-700" id="email-error">
               {actionData.errors.email}
             </div>

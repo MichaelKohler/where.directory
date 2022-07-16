@@ -1,46 +1,52 @@
 import * as React from "react";
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
+import type { ActionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData, useSearchParams } from "@remix-run/react";
 
 import { changePassword, verifyLogin } from "~/models/user.server";
 import { requireUser } from "~/session.server";
 
-interface ActionData {
-  errors?: {
-    password?: string;
-    newPassword?: string;
-    confirmPassword?: string;
-    token?: string;
-    generic?: string;
-  };
-  done?: boolean;
-}
-
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
   const currentPassword = formData.get("password");
   const newPassword = formData.get("newPassword");
   const confirmPassword = formData.get("confirmPassword");
   const token = formData.get("token") || "";
 
+  const errors = {
+    password: null,
+    newPassword: null,
+    confirmPassword: null,
+    token: null,
+    generic: null,
+  };
+
   if (typeof newPassword !== "string" || newPassword === "") {
-    return json<ActionData>(
-      { errors: { password: "Password is required" } },
+    return json(
+      { errors: { ...errors, password: "Password is required" }, done: false },
       { status: 400 }
     );
   }
 
   if (typeof confirmPassword !== "string" || confirmPassword === "") {
-    return json<ActionData>(
-      { errors: { confirmPassword: "Password confirmation is required" } },
+    return json(
+      {
+        errors: {
+          ...errors,
+          confirmPassword: "Password confirmation is required",
+        },
+        done: false,
+      },
       { status: 400 }
     );
   }
 
   if (confirmPassword !== newPassword) {
-    return json<ActionData>(
-      { errors: { confirmPassword: "Passwords do not match" } },
+    return json(
+      {
+        errors: { ...errors, confirmPassword: "Passwords do not match" },
+        done: false,
+      },
       { status: 400 }
     );
   }
@@ -54,16 +60,22 @@ export const action: ActionFunction = async ({ request }) => {
     user = await requireUser(request);
 
     if (typeof currentPassword !== "string" || currentPassword === "") {
-      return json<ActionData>(
-        { errors: { password: "Current password is required." } },
+      return json(
+        {
+          errors: { ...errors, password: "Current password is required." },
+          done: false,
+        },
         { status: 400 }
       );
     }
 
     const isValid = await verifyLogin(user.email, currentPassword);
     if (!isValid) {
-      return json<ActionData>(
-        { errors: { password: "Current password is wrong." } },
+      return json(
+        {
+          errors: { ...errors, password: "Current password is wrong." },
+          done: false,
+        },
         { status: 400 }
       );
     }
@@ -73,29 +85,41 @@ export const action: ActionFunction = async ({ request }) => {
     await changePassword(user.email, newPassword, token.toString());
   } catch (error) {
     if (error instanceof Error && error.message === "PASSWORD_RESET_EXPIRED") {
-      return json<ActionData>(
-        { errors: { token: "Password reset link expired. Please try again." } },
+      return json(
+        {
+          errors: {
+            ...errors,
+            token: "Password reset link expired. Please try again.",
+          },
+          done: false,
+        },
         { status: 400 }
       );
     }
 
-    return json<ActionData>(
-      { errors: { generic: "Something went wrong. Please try again." } },
+    return json(
+      {
+        errors: {
+          ...errors,
+          generic: "Something went wrong. Please try again.",
+        },
+        done: false,
+      },
       { status: 500 }
     );
   }
 
-  return json<ActionData>({ done: true }, { status: 200 });
-};
+  return json({ done: true, errors }, { status: 200 });
+}
 
-export const meta: MetaFunction = () => {
+export function meta(): ReturnType<MetaFunction> {
   return {
     title: "Change Password",
   };
-};
+}
 
 export default function ChangePassword() {
-  const actionData = useActionData() as ActionData;
+  const actionData = useActionData<typeof action>();
   const currentPasswordRef = React.useRef<HTMLInputElement>(null);
   const newPasswordRef = React.useRef<HTMLInputElement>(null);
   const passwordConfirmRef = React.useRef<HTMLInputElement>(null);
@@ -103,11 +127,11 @@ export default function ChangePassword() {
   const resetToken = searchParams.get("token") || "";
 
   React.useEffect(() => {
-    if (actionData?.errors?.password) {
+    if (actionData?.errors.password) {
       currentPasswordRef.current?.focus();
-    } else if (actionData?.errors?.newPassword) {
+    } else if (actionData?.errors.newPassword) {
       newPasswordRef.current?.focus();
-    } else if (actionData?.errors?.confirmPassword) {
+    } else if (actionData?.errors.confirmPassword) {
       passwordConfirmRef.current?.focus();
     }
 
@@ -127,12 +151,12 @@ export default function ChangePassword() {
     <main className="my-12 mx-auto flex min-h-full w-full max-w-md flex-col px-8">
       <Form method="post" className="space-y-6">
         <input type="hidden" name="token" value={resetToken} />
-        {actionData?.errors?.token && (
+        {actionData?.errors.token && (
           <div className="pt-1 text-red-700" id="password-token-error">
             {actionData.errors.token}
           </div>
         )}
-        {actionData?.errors?.generic && (
+        {actionData?.errors.generic && (
           <div className="pt-1 text-red-700" id="password-generic-error">
             {actionData.errors.generic}
           </div>
@@ -154,11 +178,11 @@ export default function ChangePassword() {
                 name="password"
                 type="password"
                 autoComplete="password"
-                aria-invalid={actionData?.errors?.password ? true : undefined}
+                aria-invalid={actionData?.errors.password ? true : undefined}
                 aria-describedby="password-error"
                 className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
               />
-              {actionData?.errors?.password && (
+              {actionData?.errors.password && (
                 <div className="pt-1 text-red-700" id="password-error">
                   {actionData.errors.password}
                 </div>
@@ -182,11 +206,11 @@ export default function ChangePassword() {
               name="newPassword"
               type="password"
               autoComplete="new-password"
-              aria-invalid={actionData?.errors?.newPassword ? true : undefined}
+              aria-invalid={actionData?.errors.newPassword ? true : undefined}
               aria-describedby="new-password-error"
               className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
             />
-            {actionData?.errors?.newPassword && (
+            {actionData?.errors.newPassword && (
               <div className="pt-1 text-red-700" id="new-password-error">
                 {actionData.errors.newPassword}
               </div>
@@ -210,12 +234,12 @@ export default function ChangePassword() {
               type="password"
               autoComplete="new-password"
               aria-invalid={
-                actionData?.errors?.confirmPassword ? true : undefined
+                actionData?.errors.confirmPassword ? true : undefined
               }
               aria-describedby="password-confirm-error"
               className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
             />
-            {actionData?.errors?.confirmPassword && (
+            {actionData?.errors.confirmPassword && (
               <div className="pt-1 text-red-700" id="password-confirm-error">
                 {actionData.errors.confirmPassword}
               </div>

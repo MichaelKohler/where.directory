@@ -2,19 +2,13 @@ import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import type { Trip } from "~/models/trip.server";
 import { deleteTrip } from "~/models/trip.server";
 import { getTrip } from "~/models/trip.server";
 import { requireUserId } from "~/session.server";
-
-type LoaderData = {
-  trip: Trip;
-  mapboxToken: string;
-};
 
 const layerStyle: CircleLayer = {
   id: "point",
@@ -25,11 +19,11 @@ const layerStyle: CircleLayer = {
   },
 };
 
-export function links() {
+export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request);
   invariant(params.tripId, "tripId not found");
 
@@ -40,20 +34,20 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
 
-  return json<LoaderData>({ trip, mapboxToken });
-};
+  return json({ trip, mapboxToken });
+}
 
-export const action: ActionFunction = async ({ request, params }) => {
+export async function action({ request, params }: ActionArgs) {
   const userId = await requireUserId(request);
   invariant(params.tripId, "tripId not found");
 
   await deleteTrip({ userId, id: params.tripId });
 
   return redirect("/trips");
-};
+}
 
 export default function TripDetailsPage() {
-  const data = useLoaderData() as LoaderData;
+  const data = useLoaderData<typeof loader>();
 
   const geojson: FeatureCollection<Geometry, GeoJsonProperties> = {
     type: "FeatureCollection",
