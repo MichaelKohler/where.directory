@@ -18,7 +18,7 @@ describe("trip creation tests", () => {
 
   it("should create and then delete a trip", () => {
     cy.login();
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /trips/i }).click();
     cy.findByRole("link", { name: /\+ new trip/i }).click();
@@ -41,7 +41,7 @@ describe("trip creation tests", () => {
 
   it("should create a secret trip only visible to creator", () => {
     cy.login();
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /trips/i }).click();
     cy.findByRole("link", { name: /\+ new trip/i }).click();
@@ -71,7 +71,7 @@ describe("trip creation tests", () => {
 
   it("should create an upcoming trip only visible to creator", () => {
     cy.login();
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /trips/i }).click();
     cy.findByRole("link", { name: /\+ new trip/i }).click();

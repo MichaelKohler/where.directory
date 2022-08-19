@@ -14,7 +14,7 @@ describe("trip edit tests", () => {
 
   beforeEach(() => {
     cy.login();
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /trips/i }).click();
     cy.findByRole("link", { name: /\+ new trip/i }).click();

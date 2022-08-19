@@ -9,7 +9,7 @@ describe("account username tests", () => {
 
   it("should allow to change username", () => {
     cy.login();
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /account/i }).click();
 
@@ -21,7 +21,7 @@ describe("account username tests", () => {
 describe("account deletion tests", () => {
   it("should allow to delete account with confirmation", () => {
     cy.login();
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /account/i }).click();
 

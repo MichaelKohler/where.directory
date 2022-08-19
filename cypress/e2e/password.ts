@@ -10,7 +10,7 @@ describe("password tests", () => {
 
   it("should allow to change password", () => {
     cy.login({ email });
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /account/i }).click();
     cy.findByRole("link", { name: /change password/i }).click();
@@ -31,7 +31,7 @@ describe("password tests", () => {
 
   it("should check for non-matching passwords", () => {
     cy.login({ email });
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /account/i }).click();
     cy.findByRole("link", { name: /change password/i }).click();
@@ -49,7 +49,7 @@ describe("password tests", () => {
 
 describe("password tests - logged out", () => {
   it("should ask for login before showing change password form", () => {
-    cy.visit("/password/change");
+    cy.visitAndCheck("/password/change");
     cy.findByRole("link", { name: /log in/i });
   });
 });
