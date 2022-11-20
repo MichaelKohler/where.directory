@@ -3,6 +3,16 @@ export default function AnnouncementPage() {
     <main className="my-12 mx-auto flex min-h-full w-11/12 flex-col bg-white px-8">
       <h1 className="text-title text-4xl">Announcements</h1>
 
+      <h2 className="text-title mt-10 text-3xl">Upcoming Maintenance</h2>
+      <small className="mt-2 text-xs">2022-11-20</small>
+      <p className="mt-4">
+        Over the next few weeks you might see a temporary "Maintenance mode"
+        banner and the website won't be useable. I will be doing some infrastructure
+        improvements and might need to make sure nobody can make changes for a
+        short period of time. Maintenance windows will not last longer than an
+        hour each. Sorry for the inconvenience!
+      </p>
+
       <h2 className="text-title mt-4 text-3xl">Version 1.0 released!</h2>
       <small className="mt-2 text-xs">2022-04-25</small>
       <p className="mt-4">
