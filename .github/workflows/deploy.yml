@@ -96,6 +96,11 @@ jobs:
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
 
+      - name: 🐳 Start MySQL in Docker
+        run: docker-compose up -d && sleep 3
+        env:
+          DATABASE_URL: "mysql://root:mysql@localhost:33/postgres"
+
       - name: 🛠 Setup Database
         run: npx prisma migrate reset --force
 
