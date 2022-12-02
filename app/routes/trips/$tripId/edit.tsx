@@ -136,6 +136,7 @@ export async function action({ request }: ActionArgs) {
   }
 
   const trip = await updateTrip({
+    userId,
     id,
     destination,
     country,

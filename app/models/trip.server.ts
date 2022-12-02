@@ -140,7 +140,8 @@ export function createTrip({
   });
 }
 
-export function updateTrip({
+export async function updateTrip({
+  userId,
   id,
   destination,
   country,
@@ -154,7 +155,7 @@ export function updateTrip({
   hideUpcoming = false,
 }: Pick<
   Trip,
-  "id" | "destination" | "description" | "country" | "secret" | "hideUpcoming"
+  "userId" | "id" | "destination" | "description" | "country" | "secret" | "hideUpcoming"
 > & {
   to: string;
   from: string;
@@ -162,6 +163,12 @@ export function updateTrip({
   lat: string;
   long: string;
 }) {
+  const trip = await getTrip({ id, userId });
+
+  if (!trip) {
+    throw new Error('TRIP_NOT_FOUND');
+  }
+
   return prisma.trip.update({
     where: { id },
     data: {
