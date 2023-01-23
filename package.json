@@ -37,7 +37,7 @@
     "@remix-run/serve": "^1.9.0",
     "@remix-run/vercel": "^1.9.0",
     "@vitest/coverage-c8": "^0.27.1",
-    "mapbox-gl": "^2.11.1",
+    "mapbox-gl": "^2.12.0",
     "nodemailer": "^6.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
