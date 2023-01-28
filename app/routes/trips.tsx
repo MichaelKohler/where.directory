@@ -2,8 +2,8 @@ import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
-import { getTripListItems } from "~/models/trip.server";
-import { requireUserId } from "~/session.server";
+import { getTripListItems } from "../models/trip.server";
+import { requireUserId } from "../session.server";
 
 export function meta(): ReturnType<MetaFunction> {
   return {

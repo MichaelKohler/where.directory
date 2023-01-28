@@ -2,9 +2,9 @@ import styles from "mapbox-gl/dist/mapbox-gl.css";
 import type { ActionArgs, LinksFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 
-import TripForm from "~/components/form";
-import { createTrip } from "~/models/trip.server";
-import { requireUserId } from "~/session.server";
+import TripForm from "../../components/form";
+import { createTrip } from "../../models/trip.server";
+import { requireUserId } from "../../session.server";
 
 export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];

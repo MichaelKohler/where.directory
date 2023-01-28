@@ -1,6 +1,6 @@
 import type { User, Trip } from "@prisma/client";
 
-import { prisma } from "~/db.server";
+import { prisma } from "../db.server";
 
 export type { Trip } from "@prisma/client";
 
@@ -155,7 +155,13 @@ export async function updateTrip({
   hideUpcoming = false,
 }: Pick<
   Trip,
-  "userId" | "id" | "destination" | "description" | "country" | "secret" | "hideUpcoming"
+  | "userId"
+  | "id"
+  | "destination"
+  | "description"
+  | "country"
+  | "secret"
+  | "hideUpcoming"
 > & {
   to: string;
   from: string;
@@ -166,7 +172,7 @@ export async function updateTrip({
   const trip = await getTrip({ id, userId });
 
   if (!trip) {
-    throw new Error('TRIP_NOT_FOUND');
+    throw new Error("TRIP_NOT_FOUND");
   }
 
   return prisma.trip.update({

@@ -9,7 +9,7 @@ import {
   useTransition,
 } from "@remix-run/react";
 
-import type { TripClientResponse } from "~/models/trip.server";
+import type { TripClientResponse } from "../models/trip.server";
 
 export default function TripForm({
   initialData,
