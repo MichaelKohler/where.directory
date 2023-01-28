@@ -6,10 +6,10 @@ import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import type { ExtendedTripInfo } from "~/models/trip.server";
-import { getTripListItems, getTotals } from "~/models/trip.server";
-import { getUserIdByUsername } from "~/models/user.server";
-import { getUserId } from "~/session.server";
+import type { ExtendedTripInfo } from "../models/trip.server";
+import { getTripListItems, getTotals } from "../models/trip.server";
+import { getUserIdByUsername } from "../models/user.server";
+import { getUserId } from "../session.server";
 
 const layerStyle: CircleLayer = {
   id: "point",

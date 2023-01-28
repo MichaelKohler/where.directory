@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
 
-import { prisma } from "~/db.server";
+import { prisma } from "../db.server";
 
 export async function loader({ request }: LoaderArgs) {
   const host =

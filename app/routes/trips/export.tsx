@@ -1,8 +1,9 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { getTripListItems } from "~/models/trip.server";
-import { getUserById } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+
+import { getTripListItems } from "../../models/trip.server";
+import { getUserById } from "../../models/user.server";
+import { requireUserId } from "../../session.server";
 
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request);

@@ -3,8 +3,8 @@ import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 
-import { changeUsername } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { changeUsername } from "../models/user.server";
+import { requireUserId } from "../session.server";
 
 export async function loader({ request }: LoaderArgs) {
   await requireUserId(request);

@@ -4,10 +4,10 @@ import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import TripForm from "~/components/form";
-import type { TripClientResponse } from "~/models/trip.server";
-import { getTrip, updateTrip } from "~/models/trip.server";
-import { requireUserId } from "~/session.server";
+import TripForm from "../../../components/form";
+import type { TripClientResponse } from "../../../models/trip.server";
+import { getTrip, updateTrip } from "../../../models/trip.server";
+import { requireUserId } from "../../../session.server";
 
 export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
