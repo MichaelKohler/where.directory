@@ -61,7 +61,7 @@
     "cross-env": "^7.0.3",
     "cypress": "^12.5.1",
     "esbuild-register": "^3.4.2",
-    "eslint": "^8.33.0",
+    "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "happy-dom": "^8.2.6",
     "msw": "^1.0.1",
