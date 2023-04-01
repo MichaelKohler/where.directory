@@ -98,7 +98,7 @@ export default function TripDetailsPage() {
 
       <Link
         to="edit"
-        className="rounded bg-slate-600 py-2 px-4 text-center text-white hover:bg-slate-500 active:bg-slate-500"
+        className="rounded bg-slate-600 px-4 py-2 text-center text-white hover:bg-slate-500 active:bg-slate-500"
       >
         Edit
       </Link>
@@ -111,27 +111,11 @@ export default function TripDetailsPage() {
       <Form method="post" className="mt-4">
         <button
           type="submit"
-          className="rounded bg-red-700 py-2 px-4 text-white hover:bg-red-500 active:bg-slate-500"
+          className="rounded bg-red-700 px-4 py-2 text-white hover:bg-red-500 active:bg-slate-500"
         >
           Delete
         </button>
       </Form>
     </div>
   );
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-
-  return <div>An unexpected error occurred: {error.message}</div>;
-}
-
-export function CatchBoundary() {
-  const caught = useCatch();
-
-  if (caught.status === 404) {
-    return <div>Trip not found</div>;
-  }
-
-  throw new Error(`Unexpected caught response with status: ${caught.status}`);
 }

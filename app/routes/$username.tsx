@@ -190,23 +190,3 @@ export default function UserDetailsPage() {
     </main>
   );
 }
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-
-  return <div>An unexpected error occurred: {error.message}</div>;
-}
-
-export function CatchBoundary() {
-  const caught = useCatch();
-
-  if (caught.status === 404) {
-    return (
-      <main className="flex h-full min-h-screen justify-center bg-white">
-        <h1 className="mt-10 font-title text-3xl">User not found</h1>
-      </main>
-    );
-  }
-
-  throw new Error(`Unexpected caught response with status: ${caught.status}`);
-}

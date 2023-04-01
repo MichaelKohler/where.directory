@@ -11,7 +11,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch,
+  isRouteErrorResponse,
+  useRouteError,
 } from "@remix-run/react";
 
 import Footer from "./components/footer";
@@ -74,18 +75,24 @@ export default function DefaultApp() {
   return <App />;
 }
 
-export function CatchBoundary() {
-  const caught = useCatch();
+export function ErrorBoundary() {
+  const error = useRouteError();
 
-  if (caught.status === 404) {
+  if (isRouteErrorResponse(error) && error.status === 404) {
     return (
       <App>
         <main className="flex h-full min-h-screen justify-center bg-white">
-          <h1 className="mt-10 font-title text-3xl">Page not found</h1>
+          <h1 className="mt-10 font-title text-3xl">Not found</h1>
         </main>
       </App>
     );
   }
 
-  throw new Error(`Unexpected caught response with status: ${caught.status}`);
+  return (
+    <App>
+      <main className="flex h-full min-h-screen justify-center bg-white">
+        <h1 className="mt-10 font-title text-3xl">Something went wrong</h1>
+      </main>
+    </App>
+  );
 }
