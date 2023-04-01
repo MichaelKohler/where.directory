@@ -1,14 +1,16 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
 import { getTripListItems } from "../models/trip.server";
 import { requireUserId } from "../session.server";
 
-export function meta(): ReturnType<MetaFunction> {
-  return {
-    title: "where.directory - Dashboard",
-  };
+export function meta(): ReturnType<V2_MetaFunction> {
+  return [
+    {
+      title: "where.directory - Dashboard",
+    },
+  ];
 }
 
 export async function loader({ request }: LoaderArgs) {

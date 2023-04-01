@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, useActionData, useTransition } from "@remix-run/react";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 
 import { deleteUserByUserId } from "../models/user.server";
 import { requireUserId, logout } from "../session.server";
@@ -28,10 +28,10 @@ export async function action({ request }: ActionArgs) {
 
 export default function DeletionPage() {
   const actionData = useActionData<typeof action>();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   return (
-    <main className="my-12 mx-auto flex min-h-full w-full max-w-md flex-col px-8">
+    <main className="mx-auto my-12 flex min-h-full w-full max-w-md flex-col px-8">
       <Form
         method="post"
         style={{
@@ -68,10 +68,10 @@ export default function DeletionPage() {
 
         <button
           type="submit"
-          className="rounded bg-red-700 py-2 px-4 text-center text-white hover:bg-red-500 active:bg-red-500"
-          disabled={!!transition.submission}
+          className="rounded bg-red-700 px-4 py-2 text-center text-white hover:bg-red-500 active:bg-red-500"
+          disabled={!!navigation.formData}
         >
-          {transition.submission ? (
+          {navigation.formData ? (
             <div
               className="spinner-border inline-block h-4 w-4 animate-spin rounded-full border-2"
               role="status"

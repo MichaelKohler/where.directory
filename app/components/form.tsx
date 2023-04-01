@@ -6,7 +6,7 @@ import {
   useActionData,
   useMatches,
   useLoaderData,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react";
 
 import type { TripClientResponse } from "../models/trip.server";
@@ -18,7 +18,7 @@ export default function TripForm({
 }) {
   const actionData = useActionData();
   const data = useLoaderData();
-  const transition = useTransition();
+  const navigation = useNavigation();
   const [lat, setLatitude] = React.useState<number>(0);
   const [long, setLongitude] = React.useState<number>(0);
   const [showHideUpcomingCheckbox, setShowHideUpcomingCheckbox] =
@@ -327,10 +327,10 @@ export default function TripForm({
 
       <button
         type="submit"
-        className="rounded bg-slate-600 py-2 px-4 text-white hover:bg-slate-500 active:bg-slate-500"
-        disabled={!!transition.submission}
+        className="rounded bg-slate-600 px-4 py-2 text-white hover:bg-slate-500 active:bg-slate-500"
+        disabled={!!navigation.formData}
       >
-        {transition.submission ? (
+        {navigation.formData ? (
           <div
             className="spinner-border inline-block h-4 w-4 animate-spin rounded-full border-2"
             role="status"
