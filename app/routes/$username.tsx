@@ -2,7 +2,11 @@ import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
-import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderArgs,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -35,9 +39,11 @@ export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export const meta: MetaFunction = ({ params }) => ({
-  title: `where.directory - ${params.username}`,
-});
+export const meta: V2_MetaFunction = ({ params }) => [
+  {
+    title: `where.directory - ${params.username}`,
+  },
+];
 
 export async function loader({ request, params }: LoaderArgs) {
   invariant(params.username, "username not found");
@@ -90,7 +96,7 @@ export default function UserDetailsPage() {
   };
 
   return (
-    <main className="w-12/12 my-12 mx-auto flex min-h-full flex-col bg-white px-8 md:w-11/12">
+    <main className="w-12/12 mx-auto my-12 flex min-h-full flex-col bg-white px-8 md:w-11/12">
       <section className="bg-slate-800 px-7 text-white">
         {data.nextTrip && (
           <div className="mt-10">
@@ -104,7 +110,7 @@ export default function UserDetailsPage() {
           </div>
         )}
 
-        <div className="mt-10 mb-10 flex flex-row justify-between text-center">
+        <div className="mb-10 mt-10 flex flex-row justify-between text-center">
           <div>
             <h2 className="font-title text-3xl">{data.totals.trips}</h2>
             <p className="mt-2">total trips</p>
@@ -158,10 +164,10 @@ export default function UserDetailsPage() {
               key={trip.id}
               className={trip.isFuture ? `font-bold uppercase` : ``}
             >
-              <td className="inline-block pt-5 sm:table-cell sm:pt-0 sm:pl-2">
+              <td className="inline-block pt-5 sm:table-cell sm:pl-2 sm:pt-0">
                 {new Date(trip.from).toLocaleDateString()}
               </td>
-              <td className="inline-block pt-5 sm:table-cell sm:pt-0 sm:pl-2">
+              <td className="inline-block pt-5 sm:table-cell sm:pl-2 sm:pt-0">
                 <span className="sm:hidden">&nbsp;-&nbsp;</span>
                 {new Date(trip.to).toLocaleDateString()}
               </td>
