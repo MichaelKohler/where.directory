@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { ActionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useActionData, useTransition } from "@remix-run/react";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 
 import { createTrips } from "../../models/trip.server";
 import type { Trip } from "../../models/trip.server";
@@ -42,7 +42,7 @@ export async function action({ request }: ActionArgs) {
 
 export default function ImportTripPage() {
   const actionData = useActionData<typeof action>();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   const jsonRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -113,10 +113,10 @@ export default function ImportTripPage() {
       </div>
       <button
         type="submit"
-        className="rounded bg-slate-600 py-2 px-4 text-white hover:bg-slate-500 active:bg-slate-500"
-        disabled={!!transition.submission}
+        className="rounded bg-slate-600 px-4 py-2 text-white hover:bg-slate-500 active:bg-slate-500"
+        disabled={!!navigation.formData}
       >
-        {transition.submission ? (
+        {navigation.formData ? (
           <div
             className="spinner-border inline-block h-4 w-4 animate-spin rounded-full border-2"
             role="status"
