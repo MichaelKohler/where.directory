@@ -46,56 +46,56 @@ export async function action({ request }: ActionArgs) {
   if (typeof from !== "string" || from.length === 0) {
     return json(
       { errors: { ...errors, from: "From date is required and must be text" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (typeof to !== "string" || to.length === 0) {
     return json(
       { errors: { ...errors, to: "To date is required and must be text" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (typeof destination !== "string" || destination.length === 0) {
     return json(
       { errors: { ...errors, destination: "Destination is required" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (typeof country !== "string" || country.length === 0) {
     return json(
       { errors: { ...errors, country: "Country is required" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (typeof description !== "string") {
     return json(
       { errors: { ...errors, description: "Description must be text" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (typeof flights !== "string" || flights.length === 0) {
     return json(
       { errors: { ...errors, flights: "Flights is required" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (typeof lat !== "string" || lat.length === 0) {
     return json(
       { errors: { ...errors, lat: "Latitude is required" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (typeof long !== "string" || long.length === 0) {
     return json(
       { errors: { ...errors, long: "Longitude is required" } },
-      { status: 400 },
+      { status: 400 }
     );
   }
 

@@ -33,7 +33,7 @@ export async function action({ request }: ActionArgs) {
           json: "Trips could not be imported. Please make sure that all your trips are specifying all fields with the right data type.",
         },
       },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
