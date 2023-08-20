@@ -8,7 +8,7 @@ import type {
   V2_MetaFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useCatch, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import type { ExtendedTripInfo } from "../models/trip.server";
 import { getTripListItems, getTotals } from "../models/trip.server";

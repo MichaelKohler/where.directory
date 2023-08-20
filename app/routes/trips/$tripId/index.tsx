@@ -4,11 +4,10 @@ import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
 import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { deleteTrip } from "../../../models/trip.server";
-import { getTrip } from "../../../models/trip.server";
+import { deleteTrip, getTrip } from "../../../models/trip.server";
 import { requireUserId } from "../../../session.server";
 
 const layerStyle: CircleLayer = {
