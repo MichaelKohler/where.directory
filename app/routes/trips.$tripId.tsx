@@ -7,8 +7,8 @@ import { json, redirect } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { deleteTrip, getTrip } from "../../../models/trip.server";
-import { requireUserId } from "../../../session.server";
+import { deleteTrip, getTrip } from "../models/trip.server";
+import { requireUserId } from "../session.server";
 
 const layerStyle: CircleLayer = {
   id: "point",

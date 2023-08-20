@@ -3,9 +3,9 @@ import type { ActionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 
-import { createTrips } from "../../models/trip.server";
-import type { Trip } from "../../models/trip.server";
-import { requireUserId } from "../../session.server";
+import { createTrips } from "../models/trip.server";
+import type { Trip } from "../models/trip.server";
+import { requireUserId } from "../session.server";
 
 export async function action({ request }: ActionArgs) {
   const userId = await requireUserId(request);
@@ -33,7 +33,7 @@ export async function action({ request }: ActionArgs) {
           json: "Trips could not be imported. Please make sure that all your trips are specifying all fields with the right data type.",
         },
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
