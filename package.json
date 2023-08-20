@@ -24,7 +24,9 @@
     "typecheck": "tsc -b && tsc -b cypress",
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
   },
-  "prettier": {},
+  "prettier": {
+    "trailingComma": "es5"
+  },
   "eslintIgnore": [
     "/node_modules",
     "/build",
