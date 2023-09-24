@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 
@@ -7,7 +7,7 @@ import { createTrips } from "../models/trip.server";
 import type { Trip } from "../models/trip.server";
 import { requireUserId } from "../session.server";
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();

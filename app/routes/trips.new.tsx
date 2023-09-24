@@ -1,5 +1,5 @@
 import styles from "mapbox-gl/dist/mapbox-gl.css";
-import type { ActionArgs, LinksFunction } from "@remix-run/node";
+import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 
 import TripForm from "../components/form";
@@ -16,7 +16,7 @@ export async function loader() {
   return json({ mapboxToken });
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
