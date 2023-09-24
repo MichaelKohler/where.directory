@@ -1,6 +1,10 @@
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import invariant from "tiny-invariant";
-import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
@@ -13,7 +17,7 @@ export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   invariant(params.tripId, "tripId not found");
 
@@ -27,7 +31,7 @@ export async function loader({ request, params }: LoaderArgs) {
   return json({ trip, mapboxToken });
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
@@ -154,7 +158,7 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function EditTripPage() {
-  const data = useLoaderData();
+  const data = useLoaderData<typeof loader>();
 
   // TODO: check back here once it's clear how serialized
   // data should be handled in terms of types. So far this was

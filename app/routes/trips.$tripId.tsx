@@ -2,7 +2,11 @@ import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 import styles from "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
-import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -23,7 +27,7 @@ export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   invariant(params.tripId, "tripId not found");
 
@@ -37,7 +41,7 @@ export async function loader({ request, params }: LoaderArgs) {
   return json({ trip, mapboxToken });
 }
 
-export async function action({ request, params }: ActionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
   invariant(params.tripId, "tripId not found");
 

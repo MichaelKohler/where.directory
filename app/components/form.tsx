@@ -11,13 +11,31 @@ import {
 
 import type { TripClientResponse } from "../models/trip.server";
 
+type Response = {
+  mapboxToken: string;
+};
+
+type ActionResponse = {
+  errors: {
+    to: string;
+    from: string;
+    destination: string;
+    country: string;
+    description: string;
+    lat: string;
+    long: string;
+    flights: string;
+    generic: string;
+  };
+};
+
 export default function TripForm({
   initialData,
 }: {
   initialData?: TripClientResponse;
 }) {
-  const actionData = useActionData();
-  const data = useLoaderData();
+  const actionData = useActionData<ActionResponse>();
+  const data = useLoaderData<Response>();
   const navigation = useNavigation();
   const [lat, setLatitude] = React.useState<number>(0);
   const [long, setLongitude] = React.useState<number>(0);
@@ -34,9 +52,8 @@ export default function TripForm({
 
   const isEdit = !!initialData?.id;
 
-  const parentRouteData = matches.find(
-    (match) => match.id === "routes/trips"
-  )?.data;
+  const parentRouteData = matches.find((match) => match.id === "routes/trips")
+    ?.data as any;
   const trips = parentRouteData?.tripListItems;
 
   const handleLocationCopy = (event: React.ChangeEvent<HTMLSelectElement>) => {

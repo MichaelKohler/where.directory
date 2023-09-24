@@ -1,13 +1,11 @@
 import type { User, Trip } from "@prisma/client";
+import type { SerializeFrom } from "@remix-run/node";
 
 import { prisma } from "../db.server";
 
 export type { Trip } from "@prisma/client";
 
-export type TripClientResponse = Trip & {
-  from: string;
-  to: string;
-};
+export type TripClientResponse = SerializeFrom<Trip>;
 
 export type ExtendedTripInfo = Trip & {
   isFuture: boolean;

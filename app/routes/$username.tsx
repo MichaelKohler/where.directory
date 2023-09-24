@@ -4,8 +4,8 @@ import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
 import type {
   LinksFunction,
-  LoaderArgs,
-  V2_MetaFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
@@ -39,13 +39,13 @@ export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export const meta: V2_MetaFunction = ({ params }) => [
+export const meta: MetaFunction = ({ params }) => [
   {
     title: `where.directory - ${params.username}`,
   },
 ];
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   invariant(params.username, "username not found");
 
   const user = await getUserIdByUsername(params.username);
