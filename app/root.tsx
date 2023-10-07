@@ -1,4 +1,5 @@
 import type {
+  HeadersFunction,
   LinksFunction,
   LoaderFunctionArgs,
   MetaFunction,
@@ -20,6 +21,16 @@ import Header from "./components/header";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
 import React from "react";
+
+export function headers(): ReturnType<HeadersFunction> {
+  return {
+    "Permissions-Policy":
+      "accelerometer=(), ambient-light-sensor=(), battery=(), camera=(), microphone=(), geolocation=(), gyroscope=()",
+    "Referrer-Policy": "no-referrer",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+  };
+}
 
 export function links(): ReturnType<LinksFunction> {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
