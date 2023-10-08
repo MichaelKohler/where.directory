@@ -26,7 +26,8 @@ export function headers(): ReturnType<HeadersFunction> {
   return {
     "Permissions-Policy":
       "accelerometer=(), ambient-light-sensor=(), battery=(), camera=(), microphone=(), geolocation=(), gyroscope=()",
-    "Referrer-Policy": "no-referrer",
+    // setting the "Referrer-Policy" to "no-referrer" breaks mapbox
+    "Referrer-Policy": "origin-when-cross-origin",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
   };
