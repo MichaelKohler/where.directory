@@ -131,7 +131,7 @@ export default function TripForm({
             ref={fromRef}
             type="date"
             name="from"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors.from ? true : undefined}
             aria-errormessage={
               actionData?.errors.from ? "from-error" : undefined
@@ -141,7 +141,7 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors.from && (
-          <div className="pt-1 text-red-700" id="from=error">
+          <div className="pt-1 text-mkerror" id="from=error">
             {actionData.errors.from}
           </div>
         )}
@@ -155,7 +155,7 @@ export default function TripForm({
             type="date"
             name="to"
             onChange={handleUntilDateChange}
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors.to ? true : undefined}
             aria-errormessage={actionData?.errors.to ? "to-error" : undefined}
             data-testid="new-trip-to-input"
@@ -163,7 +163,7 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors.to && (
-          <div className="pt-1 text-red-700" id="to=error">
+          <div className="pt-1 text-mkerror" id="to=error">
             {actionData.errors.to}
           </div>
         )}
@@ -175,7 +175,7 @@ export default function TripForm({
           <input
             ref={destinationRef}
             name="destination"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors.destination ? true : undefined}
             aria-errormessage={
               actionData?.errors.destination ? "destination-error" : undefined
@@ -184,7 +184,7 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors.destination && (
-          <div className="pt-1 text-red-700" id="destination=error">
+          <div className="pt-1 text-mkerror" id="destination=error">
             {actionData.errors.destination}
           </div>
         )}
@@ -196,7 +196,7 @@ export default function TripForm({
           <input
             ref={countryRef}
             name="country"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors.country ? true : undefined}
             aria-errormessage={
               actionData?.errors.country ? "country-error" : undefined
@@ -205,7 +205,7 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors.country && (
-          <div className="pt-1 text-red-700" id="country=error">
+          <div className="pt-1 text-mkerror" id="country=error">
             {actionData.errors.country}
           </div>
         )}
@@ -216,7 +216,7 @@ export default function TripForm({
           <span>Copy location from previous trip: </span>
           <select
             name="usedOnClientOnlyPreviousTripCopyLocation"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 py-2 leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 py-2 leading-loose"
             onChange={handleLocationCopy}
           >
             <option value="">Select a trip to copy from</option>
@@ -229,7 +229,7 @@ export default function TripForm({
           </select>
         </label>
         {actionData?.errors.country && (
-          <div className="pt-1 text-red-700" id="country=error">
+          <div className="pt-1 text-mkerror" id="country=error">
             {actionData.errors.country}
           </div>
         )}
@@ -257,12 +257,12 @@ export default function TripForm({
           ></Marker>
         </Map>
         {actionData?.errors?.lat && (
-          <div className="pt-1 text-red-700" id="lat=error">
+          <div className="pt-1 text-mkerror" id="lat=error">
             {actionData.errors.lat}
           </div>
         )}
         {actionData?.errors?.long && (
-          <div className="pt-1 text-red-700" id="long=error">
+          <div className="pt-1 text-mkerror" id="long=error">
             {actionData.errors.long}
           </div>
         )}
@@ -274,7 +274,7 @@ export default function TripForm({
           <textarea
             ref={descriptionRef}
             name="description"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors.description ? true : undefined}
             aria-errormessage={
               actionData?.errors.description ? "description-error" : undefined
@@ -283,7 +283,7 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors.description && (
-          <div className="pt-1 text-red-700" id="description=error">
+          <div className="pt-1 text-mkerror" id="description=error">
             {actionData.errors.description}
           </div>
         )}
@@ -296,7 +296,7 @@ export default function TripForm({
             ref={flightsRef}
             type="number"
             name="flights"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors.flights ? true : undefined}
             aria-errormessage={
               actionData?.errors.flights ? "flights-error" : undefined
@@ -305,7 +305,7 @@ export default function TripForm({
           />
         </label>
         {actionData?.errors.flights && (
-          <div className="pt-1 text-red-700" id="flights=error">
+          <div className="pt-1 text-mkerror" id="flights=error">
             {actionData.errors.flights}
           </div>
         )}
@@ -337,14 +337,14 @@ export default function TripForm({
       {isEdit && <input type="hidden" name="id" value={initialData?.id} />}
 
       {actionData?.errors.generic && (
-        <div className="pt-1 text-red-700" id="generic=error">
+        <div className="pt-1 text-mkerror" id="generic=error">
           {actionData.errors.generic}
         </div>
       )}
 
       <button
         type="submit"
-        className="rounded bg-slate-600 px-4 py-2 text-white hover:bg-slate-500 active:bg-slate-500"
+        className="rounded bg-mk px-4 py-2 text-white hover:bg-mk-tertiary active:bg-mk-tertiary"
         disabled={!!navigation.formData}
       >
         {navigation.formData ? (

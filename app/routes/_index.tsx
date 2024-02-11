@@ -7,7 +7,7 @@ export default function Index() {
 
   return (
     <main className="flex w-full flex-col bg-white">
-      <div className="flex h-128 w-full flex-col justify-center bg-gradient-to-b from-slate-800 to-slate-700 px-8 text-center text-white">
+      <div className="flex h-128 w-full flex-col justify-center bg-gradient-to-b from-mk to-mk-tertiary px-8 text-center text-white">
         <h1 className="font-title text-6xl">Where have you been?</h1>
         <p className="mt-9 text-2xl">
           Track your vacations and trips in both list and map views
@@ -16,13 +16,13 @@ export default function Index() {
           <div className="mt-9 flex flex-row justify-center space-x-4 lg:hidden">
             <Link
               to="/join"
-              className="text-white-100 flex items-center justify-center rounded bg-slate-600 py-2 px-4 font-medium hover:bg-slate-500 active:bg-yellow-500"
+              className="text-white-100 flex items-center justify-center rounded bg-mk py-2 px-4 font-medium hover:bg-mk-tertiary active:bg-mk-tertiary"
             >
               Sign up
             </Link>
             <Link
               to="/login"
-              className="flex items-center justify-center rounded bg-slate-600 px-4 py-2 font-medium text-white hover:bg-slate-500 active:bg-slate-500"
+              className="flex items-center justify-center rounded bg-mk px-4 py-2 font-medium text-white hover:bg-mk-tertiary active:bg-mk-tertiary"
             >
               Log In
             </Link>
@@ -31,7 +31,7 @@ export default function Index() {
         <div className="flex justify-center">
           <Link
             to="/demo"
-            className="mt-12 flex items-center justify-center rounded bg-yellow-600 px-4 py-2 font-medium text-white hover:bg-yellow-500"
+            className="mt-12 flex items-center justify-center rounded bg-mk px-4 py-2 font-medium text-white hover:bg-mk-tertiary"
           >
             Demo profile
           </Link>

@@ -101,7 +101,7 @@ export default function TripDetailsPage() {
 
       <Link
         to="edit"
-        className="rounded bg-slate-600 px-4 py-2 text-center text-white hover:bg-slate-500 active:bg-slate-500"
+        className="rounded bg-mk px-4 py-2 text-center text-white hover:bg-mk-tertiary active:bg-mk-tertiary"
       >
         Edit
       </Link>
@@ -114,7 +114,7 @@ export default function TripDetailsPage() {
       <Form method="post" className="mt-4">
         <button
           type="submit"
-          className="rounded bg-red-700 px-4 py-2 text-white hover:bg-red-500 active:bg-slate-500"
+          className="rounded bg-mkerror px-4 py-2 text-white hover:bg-mkerror-muted active:bg-mkerror-muted"
         >
           Delete
         </button>

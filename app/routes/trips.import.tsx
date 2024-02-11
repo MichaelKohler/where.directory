@@ -96,7 +96,7 @@ export default function ImportTripPage() {
           <textarea
             ref={jsonRef}
             name="json"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-xs leading-loose"
+            className="flex-1 rounded-md border-2 border-mk px-3 text-xs leading-loose"
             rows={10}
             aria-invalid={actionData?.errors.json ? true : undefined}
             aria-errormessage={
@@ -106,14 +106,14 @@ export default function ImportTripPage() {
           />
         </label>
         {actionData?.errors.json && (
-          <div className="pt-1 text-red-700" id="json=error">
+          <div className="pt-1 text-mkerror" id="json=error">
             {actionData.errors.json}
           </div>
         )}
       </div>
       <button
         type="submit"
-        className="rounded bg-slate-600 px-4 py-2 text-white hover:bg-slate-500 active:bg-slate-500"
+        className="rounded bg-mk px-4 py-2 text-white hover:bg-mk-tertiary active:bg-mk-tertiary"
         disabled={!!navigation.formData}
       >
         {navigation.formData ? (

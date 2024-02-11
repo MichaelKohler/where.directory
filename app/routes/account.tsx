@@ -67,7 +67,7 @@ export default function AccountPage() {
             <input
               ref={usernameRef}
               name="username"
-              className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+              className="flex-1 rounded-md border-2 border-mk px-3 text-lg leading-loose"
               aria-invalid={actionData?.errors.username ? true : undefined}
               aria-errormessage={
                 actionData?.errors.username ? "username-error" : undefined
@@ -76,14 +76,14 @@ export default function AccountPage() {
             />
           </label>
           {actionData?.errors.username && (
-            <div className="pt-1 text-red-700" id="username=error">
+            <div className="pt-1 text-mkerror" id="username=error">
               {actionData.errors.username}
             </div>
           )}
         </div>
         <button
           type="submit"
-          className="rounded bg-slate-600 px-4 py-2 text-white hover:bg-slate-500 active:bg-slate-500"
+          className="rounded bg-mk px-4 py-2 text-white hover:bg-mk-tertiary active:bg-mk-tertiary"
           disabled={!!navigation.formData}
         >
           {navigation.formData ? (
@@ -100,7 +100,7 @@ export default function AccountPage() {
 
         <Link
           to="/password/change"
-          className="rounded bg-slate-600 px-4 py-2 text-center text-white hover:bg-slate-500 active:bg-slate-500"
+          className="rounded bg-mk px-4 py-2 text-center text-white hover:bg-mk-tertiary active:bg-mk-tertiary"
         >
           Go to change password form
         </Link>
@@ -109,7 +109,7 @@ export default function AccountPage() {
 
         <Link
           to="/deletion"
-          className="rounded bg-red-700 px-4 py-2 text-center text-white hover:bg-red-500 active:bg-red-500"
+          className="rounded bg-mkerror px-4 py-2 text-center text-mk-text hover:bg-mkerror-muted active:bg-mkerror-muted"
         >
           Delete my account and all trips
         </Link>

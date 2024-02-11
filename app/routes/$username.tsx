@@ -97,7 +97,7 @@ export default function UserDetailsPage() {
 
   return (
     <main className="w-12/12 mx-auto my-12 flex min-h-full flex-col bg-white px-8 md:w-11/12">
-      <section className="bg-slate-800 px-7 text-white">
+      <section className="bg-mk px-7 text-white">
         {data.nextTrip && (
           <div className="mt-10">
             <h2 className="font-title text-3xl">
@@ -148,7 +148,7 @@ export default function UserDetailsPage() {
       </section>
 
       <table className="mt-7 text-left leading-8">
-        <thead className="text-bold hidden bg-slate-800 font-title text-white sm:table-header-group ">
+        <thead className="text-bold hidden bg-mk font-title text-white sm:table-header-group ">
           <tr>
             <th className="w-1/12 pl-2">From</th>
             <th className="w-1/12 pl-2">Until</th>
@@ -158,7 +158,7 @@ export default function UserDetailsPage() {
             <th className="hidden w-1/12 pl-2 pr-2 lg:block">Flights</th>
           </tr>
         </thead>
-        <tbody className="divide-y-2 divide-slate-100 text-center sm:text-left">
+        <tbody className="divide-y-2 divide-mklight-100 text-center sm:text-left">
           {data.trips.map((trip) => (
             <tr
               key={trip.id}

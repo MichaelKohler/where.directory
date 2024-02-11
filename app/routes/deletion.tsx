@@ -42,7 +42,7 @@ export default function DeletionPage() {
         }}
       >
         {actionData?.errors.deletion && (
-          <div className="pt-1 text-red-700" id="deletion=error">
+          <div className="pt-1 text-mkerror" id="deletion=error">
             {actionData.errors.deletion}
           </div>
         )}
@@ -54,11 +54,7 @@ export default function DeletionPage() {
         </p>
         <p>
           If you think you might use this service again in the future, you can{" "}
-          <a
-            href="/trips/export"
-            className="text-blue-500 underline"
-            target="_blank"
-          >
+          <a href="/trips/export" className="text-mk underline" target="_blank">
             export
           </a>{" "}
           your data and later on import it on a new account again. Right-click
@@ -68,7 +64,7 @@ export default function DeletionPage() {
 
         <button
           type="submit"
-          className="rounded bg-red-700 px-4 py-2 text-center text-white hover:bg-red-500 active:bg-red-500"
+          className="rounded bg-mkerror px-4 py-2 text-center text-white hover:bg-mkerror-muted active:bg-mkerror-muted"
           disabled={!!navigation.formData}
         >
           {navigation.formData ? (

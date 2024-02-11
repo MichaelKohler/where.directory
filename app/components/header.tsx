@@ -16,13 +16,13 @@ export default function Header() {
 
   return (
     <header
-      className={`flex bg-slate-800 p-4 text-white ${
+      className={`flex bg-mk p-4 text-white ${
         menuOpen ? "flex-col" : "flex-row"
       }`}
     >
       <h1 className="text-3xl font-bold">
         <Link to="/">
-          where<span className="text-sky-200">.directory</span>
+          where<span className="text-mklight-300">.directory</span>
         </Link>
       </h1>
 
@@ -42,7 +42,7 @@ export default function Header() {
                 to="/trips"
                 className={`text-white-700 flex ${
                   menuOpen ? "border-b py-8" : "px-8 py-2"
-                } text-base font-semibold hover:text-blue-300 hover:transition-colors hover:duration-300 focus:text-blue-300`}
+                } text-base font-semibold hover:text-mklight-300 hover:transition-colors hover:duration-300 focus:text-mklight-300`}
               >
                 Trips
               </Link>
@@ -50,7 +50,7 @@ export default function Header() {
                 to={`/${user.username}`}
                 className={`text-white-700 flex ${
                   menuOpen ? "border-b py-8" : "px-8 py-2"
-                } text-base font-semibold hover:text-blue-300 hover:transition-colors hover:duration-300 focus:text-blue-300`}
+                } text-base font-semibold hover:text-mklight-300 hover:transition-colors hover:duration-300 focus:text-mklight-300`}
               >
                 Profile
               </Link>
@@ -58,7 +58,7 @@ export default function Header() {
                 to="/account"
                 className={`text-white-700 flex ${
                   menuOpen ? "border-b py-8" : "px-8 py-2"
-                } text-base font-semibold hover:text-blue-300 hover:transition-colors hover:duration-300 focus:text-blue-300`}
+                } text-base font-semibold hover:text-mklight-300 hover:transition-colors hover:duration-300 focus:text-mklight-300`}
               >
                 Account
               </Link>
@@ -71,7 +71,7 @@ export default function Header() {
             <Form action="/logout" method="post">
               <button
                 type="submit"
-                className="text-white-100 rounded bg-slate-600 py-2 px-4 hover:bg-slate-500 active:bg-slate-500"
+                className="text-white-100 rounded bg-mk-tertiary py-2 px-4 hover:bg-mk-tertiary active:bg-mk-tertiary"
               >
                 Logout
               </button>
@@ -84,13 +84,13 @@ export default function Header() {
             >
               <Link
                 to="/join"
-                className="text-white-100 flex items-center justify-center rounded bg-yellow-600 py-2 px-4 font-medium hover:bg-yellow-500 active:bg-yellow-500"
+                className="text-mk-text flex items-center justify-center rounded bg-mkwarning py-2 px-4 font-medium hover:bg-mkwarning-muted active:bg-mkwarning-muted"
               >
                 Sign up
               </Link>
               <Link
                 to="/login"
-                className="text-white-100 flex items-center justify-center rounded bg-slate-600 py-2 px-4 font-medium hover:bg-slate-500 active:bg-slate-500"
+                className="text-white-100 flex items-center justify-center rounded bg-mk-tertiary py-2 px-4 font-medium hover:bg-mk active:bg-mk"
               >
                 Log In
               </Link>
@@ -101,7 +101,7 @@ export default function Header() {
 
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="text-white-100 absolute top-3 right-3 h-10 w-10 rounded bg-slate-600 hover:bg-slate-500 active:bg-slate-500 lg:hidden"
+        className="text-white-100 absolute top-3 right-3 h-10 w-10 rounded bg-mk-tertiary hover:bg-mk active:bg-mk lg:hidden"
       >
         {menuOpen ? "✕" : "☰"}
       </button>

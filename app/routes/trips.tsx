@@ -24,8 +24,8 @@ export default function TripsPage() {
 
   return (
     <main className="flex min-h-screen bg-white">
-      <div className="h-full w-40 border-r bg-gray-50 md:w-80">
-        <Link to="new" className="block p-4 text-xl text-blue-500">
+      <div className="min-h-screen w-40 border-r bg-mklight-100 md:w-80">
+        <Link to="new" className="block p-4 text-xl text-mk">
           + New Trip
         </Link>
 
