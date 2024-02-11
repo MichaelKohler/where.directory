@@ -148,7 +148,7 @@ export default function UserDetailsPage() {
       </section>
 
       <table className="mt-7 text-left leading-8">
-        <thead className="text-bold hidden bg-mk font-title text-white sm:table-header-group ">
+        <thead className="text-bold hidden bg-mk font-title text-white sm:table-header-group">
           <tr>
             <th className="w-1/12 pl-2">From</th>
             <th className="w-1/12 pl-2">Until</th>
@@ -158,23 +158,31 @@ export default function UserDetailsPage() {
             <th className="hidden w-1/12 pl-2 pr-2 lg:block">Flights</th>
           </tr>
         </thead>
-        <tbody className="divide-y-2 divide-mklight-100 text-center sm:text-left">
+        <tbody className="divide-y-2 divide-mklight-100 text-left">
           {data.trips.map((trip) => (
             <tr
               key={trip.id}
-              className={trip.isFuture ? `font-bold uppercase` : ``}
+              className={trip.isFuture ? `sm:font-bold sm:uppercase` : ``}
             >
-              <td className="inline-block pt-5 sm:table-cell sm:pl-2 sm:pt-0">
+              <td className="inline-block pt-5 text-sm sm:text-base sm:table-cell sm:pl-2 sm:pt-0">
                 {new Date(trip.from).toLocaleDateString()}
               </td>
               <td className="inline-block pt-5 sm:table-cell sm:pl-2 sm:pt-0">
                 <span className="sm:hidden">&nbsp;-&nbsp;</span>
                 {new Date(trip.to).toLocaleDateString()}
+
+                {trip.isFuture && (
+                  <span className="ml-12 py-1 px-2 sm:hidden bg-mk text-white rounded-xl">
+                    Upcoming
+                  </span>
+                )}
               </td>
               <td className="block text-lg sm:table-cell sm:pl-4 sm:text-base">
+                <span className="sm:hidden">Location: </span>
                 {trip.destination}
               </td>
               <td className="block text-lg sm:table-cell sm:pl-2 sm:text-base">
+                <span className="sm:hidden">Country: </span>
                 {trip.country}
               </td>
               <td className="block pb-5 sm:table-cell sm:pl-2">
