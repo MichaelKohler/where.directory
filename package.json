@@ -36,6 +36,7 @@
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
+    "@vercel/analytics": "^1.2.2",
     "isbot": "latest",
     "mapbox-gl": "^3.2.0",
     "nodemailer": "^6.9.12",

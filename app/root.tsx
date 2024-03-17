@@ -15,6 +15,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
+import { Analytics } from "@vercel/analytics/react";
 
 import Footer from "./components/footer";
 import Header from "./components/header";
@@ -77,6 +78,7 @@ function App({ children }: { children?: React.ReactNode }) {
         <Footer />
         <ScrollRestoration />
         <Scripts />
+        <Analytics />
         <LiveReload />
       </body>
     </html>
