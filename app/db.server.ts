@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaLibSQL } from "@prisma/adapter-libsql";
+import { createClient } from "@libsql/client";
 
 let prisma: PrismaClient;
 
@@ -11,10 +13,22 @@ declare global {
 // create a new connection to the DB with every change either.
 // in production we'll have a single connection to the DB.
 if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient();
+  const libsql = createClient({
+    url: `${process.env.TURSO_DATABASE_URL}`,
+    authToken: `${process.env.TURSO_AUTH_TOKEN}`,
+  });
+
+  const adapter = new PrismaLibSQL(libsql);
+  prisma = new PrismaClient({ adapter });
 } else {
   if (!global.__db__) {
-    global.__db__ = new PrismaClient();
+    const libsql = createClient({
+      url: `${process.env.TURSO_DATABASE_URL}`,
+      authToken: `${process.env.TURSO_AUTH_TOKEN}`,
+    });
+
+    const adapter = new PrismaLibSQL(libsql);
+    global.__db__ = new PrismaClient({ adapter });
   }
   prisma = global.__db__;
   prisma.$connect();
