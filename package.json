@@ -29,7 +29,7 @@
     "/public/build"
   ],
   "dependencies": {
-    "@libsql/client": "^0.6.0",
+    "@libsql/client": "^0.5.6",
     "@node-rs/bcrypt": "^1.10.2",
     "@prisma/adapter-libsql": "^5.12.1",
     "@prisma/client": "^5.12.1",
