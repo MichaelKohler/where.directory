@@ -1,5 +1,5 @@
 import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
-import styles from "mapbox-gl/dist/mapbox-gl.css";
+import styles from "mapbox-gl/dist/mapbox-gl.css?url";
 import Map, { Source, Layer } from "react-map-gl";
 import type { CircleLayer } from "react-map-gl";
 import type {

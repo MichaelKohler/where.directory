@@ -7,7 +7,6 @@ import type {
 import { json } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -19,7 +18,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import Footer from "./components/footer";
 import Header from "./components/header";
-import tailwindStylesheetUrl from "./styles/tailwind.css";
+import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 import { getUser } from "./session.server";
 import React from "react";
 
@@ -79,7 +78,6 @@ function App({ children }: { children?: React.ReactNode }) {
         <ScrollRestoration />
         <Scripts />
         <Analytics />
-        <LiveReload />
       </body>
     </html>
   );
