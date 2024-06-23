@@ -1,4 +1,4 @@
-import styles from "mapbox-gl/dist/mapbox-gl.css?url";
+import styles from "mapbox-gl/dist/mapbox-gl.css";
 import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 

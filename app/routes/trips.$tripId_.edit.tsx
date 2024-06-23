@@ -1,4 +1,4 @@
-import styles from "mapbox-gl/dist/mapbox-gl.css?url";
+import styles from "mapbox-gl/dist/mapbox-gl.css";
 import invariant from "tiny-invariant";
 import type {
   ActionFunctionArgs,

@@ -3,15 +3,19 @@
   "private": true,
   "license": "MIT",
   "sideEffects": false,
-  "type": "module",
   "scripts": {
-    "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "build": "run-s build:*",
+    "build:css": "npm run generate:css -- --minify",
+    "build:remix": "remix build",
+    "dev": "run-p dev:*",
+    "dev:css": "npm run generate:css -- --watch",
+    "dev:remix": "node ./node_modules/.bin/remix dev",
     "format": "prettier --write .",
+    "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "postinstall": "prisma generate",
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
-    "start": "remix-serve ./build/server/index.js",
+    "start": "remix-serve ./build/index.js",
     "test": "vitest",
     "typecheck": "tsc -b",
     "validate": "run-p \"test -- --run\" lint typecheck"
@@ -66,7 +70,6 @@
     "start-server-and-test": "^2.0.4",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
-    "vite": "^5.3.1",
     "vitest": "^1.6.0"
   },
   "engines": {
